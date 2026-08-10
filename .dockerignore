@@ -1,0 +1,14 @@
+# Ne rien envoyer d'inutile (ni de sensible) au contexte de build Docker
+.git
+.gitignore
+.dockerignore
+Dockerfile
+README.md
+*.md
+.DS_Store
+**/.DS_Store
+.vscode
+.idea
+node_modules
+npm-debug.log
+site/fonts/google.css
