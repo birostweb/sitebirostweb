@@ -2,4 +2,7 @@
 **/.DS_Store
 site/fonts/google.css
 node_modules/
+vendor/
+.env
+.env.local
 *.log

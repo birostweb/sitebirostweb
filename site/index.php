@@ -1,3 +1,15 @@
+<?php
+// Jeton anti-spam du formulaire : HMAC signé sur l'horodatage du rendu.
+// send_mail.php vérifie la signature + un délai minimum avant d'accepter l'envoi.
+require __DIR__ . '/vendor/autoload.php';
+try {
+    Dotenv\Dotenv::createImmutable(__DIR__)->load();
+} catch (Dotenv\Exception\InvalidPathException $e) {
+    // Pas de .env : normal en prod, les variables viennent de l'environnement Dokploy.
+}
+$contactFormTs    = time();
+$contactFormToken = hash_hmac('sha256', (string) $contactFormTs, $_ENV['CONTACT_FORM_SECRET'] ?? '');
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -23,8 +35,9 @@
 <meta name="twitter:title" content="Théo Birost — Développeur web full-stack">
 <meta name="twitter:description" content="Des sites web sur-mesure pensés pour vous rapporter des clients. Devis gratuit sous 48h.">
 <meta name="twitter:image" content="https://birostweb.fr/og-image.png">
-<!-- Favicon (SVG inline, aucune requête externe) -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0 0 32 32'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%23231F20'/%3E%3Ccircle%20cx='24'%20cy='9'%20r='3'%20fill='%23F0451E'/%3E%3Ctext%20x='16'%20y='23'%20font-family='Arial,sans-serif'%20font-size='17'%20font-weight='700'%20fill='%23F0EDE4'%20text-anchor='middle'%3ETB%3C/text%3E%3C/svg%3E">
+<!-- Favicon Birostweb -->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <!-- Polices auto-hébergées (RGPD : aucune requête vers Google) -->
 <link rel="preload" href="/fonts/ibmplexsans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/ibmplexsanscondensed-700-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -285,6 +298,32 @@ img{max-width:100%;display:block}
   .reveal{opacity:1!important;transform:none!important}
   *{transition:none!important}
 }
+
+/* ===== Projets : rôle + liens (repris du portfolio) ===== */
+.project__role{font-size:14.5px;color:var(--gray);margin:-6px 0 16px;line-height:1.5}
+.project__role b{color:var(--ink);font-family:var(--fm);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-right:8px}
+.project__links{display:flex;flex-wrap:wrap;gap:12px 22px}
+
+/* ===== Autres projets (mini-grid) ===== */
+.subhead{font-family:var(--fm);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin:clamp(38px,5vw,56px) 0 22px;display:flex;align-items:center;gap:14px}
+.subhead::after{content:"";flex:1;height:1px;background:var(--line)}
+.mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.mini{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:clamp(22px,2.4vw,28px);display:flex;flex-direction:column;transition:border-color .2s}
+.mini:hover{border-color:var(--ink)}
+.mini__k{font-family:var(--fm);font-size:11px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+.mini h3{font-family:var(--fd);font-weight:700;font-size:22px;line-height:1.05;margin:9px 0 8px}
+.mini p{font-size:14.5px;color:var(--gray);line-height:1.5;margin-bottom:14px}
+.mini .tags{margin-top:auto;margin-bottom:16px}
+
+/* ===== Champs select du formulaire ===== */
+.field select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--d-line);border-radius:8px;color:var(--d-text);font-family:var(--fb);font-size:16px;padding:12px 40px 12px 14px;transition:.2s;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23AEA99C' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:18px}
+.field select:focus{outline:none;border-color:var(--accent)}
+.field select option{background:var(--d-bg);color:var(--d-text)}
+.form__status{font-family:var(--fm);font-size:13px;line-height:1.5;padding:12px 14px;border-radius:8px;display:none}
+.form__status.ok{display:block;background:rgba(240,69,30,.10);border:1px solid var(--accent);color:var(--d-text)}
+.form__status.err{display:block;background:rgba(255,255,255,.04);border:1px solid var(--d-line);color:var(--d-dim)}
+
+@media (max-width:640px){.mini-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -292,7 +331,7 @@ img{max-width:100%;display:block}
 <!-- ============ NAV ============ -->
 <header class="nav">
   <div class="wrap nav__in">
-    <a href="#top" class="brand"><b></b>Théo Birost</a>
+    <a href="#top" class="brand"><b></b>Birostweb</a>
     <nav class="nav__links" id="menu">
       <a href="#realisations">Réalisations</a>
       <a href="#offres">Offres</a>
@@ -357,53 +396,77 @@ img{max-width:100%;display:block}
       <article class="project reveal">
         <div class="shot">
           <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">hydrogenbusinessforclimate.com</span></div>
-          <div class="shot__img"><!-- <img src="forum.jpg" alt="Forum Hydrogen"> -->
-            <span class="shot__ph">Forum H2</span><span class="shot__phk">Ajoute une capture</span>
+          <div class="shot__img"><img src="/img/hydrogen_website.png" alt="Site du Forum Hydrogen Business for Climate"></div>
+        </div>
+        <div>
+          <span class="project__k">Projet client · Stage</span>
+          <h3>Forum Hydrogen Business for Climate</h3>
+          <span class="project__ctx">Événement B2B international · Refonte complète</span>
+          <p>Refonte intégrale du site d'un forum international de la filière hydrogène : bascule bilingue FR/EN, blocs sur-mesure (intervenants, exposants, presse) et pages optimisées pour charger vite malgré un contenu dense.</p>
+          <p class="project__role"><b>Mon rôle</b>Seul développeur sur le projet, de l'intégration au déploiement, pendant mon stage chez AER BFC.</p>
+          <div class="tags"><span class="tag">WordPress</span><span class="tag">ACF</span><span class="tag">CPT UI</span><span class="tag">TranslatePress</span><span class="tag">PHP</span><span class="tag">SEO</span></div>
+          <div class="project__links">
+            <a class="plink" href="https://www.hydrogenbusinessforclimate.com" target="_blank" rel="noopener">Voir le site en ligne
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
           </div>
         </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="shot">
+          <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">clicker — jeu</span></div>
+          <div class="shot__img"><img src="/img/clicker_img.png" alt="Jeu du clicker"></div>
+        </div>
         <div>
-          <span class="project__k">Projet client</span>
-          <h3>Forum Hydrogen Business for Climate</h3>
-          <span class="project__ctx">Refonte complète · Événement B2B international</span>
-          <p>Refonte intégrale du site d'un forum international de la filière hydrogène : version bilingue FR/EN, composants sur-mesure (intervenants, exposants, presse) et pages optimisées pour charger vite malgré un contenu dense.</p>
-          <div class="tags"><span class="tag">WordPress</span><span class="tag">ACF</span><span class="tag">TranslatePress</span><span class="tag">SEO</span></div>
-          <a class="plink" href="https://www.hydrogenbusinessforclimate.com" target="_blank" rel="noopener">Voir le site en ligne
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          <span class="project__k">Projet perso · Solo</span>
+          <h3>Jeu du clicker</h3>
+          <span class="project__ctx">Jeu de clic old-school · Système de progression</span>
+          <p>Un petit jeu de clic old-school : on accumule des points, on débloque des améliorations et on grimpe au classement. Front, back et déploiement Docker faits maison.</p>
+          <p class="project__role"><b>Mon rôle</b>Conception et développement complet, du front au back.</p>
+          <div class="tags"><span class="tag">HTML</span><span class="tag">Tailwind</span><span class="tag">PHP</span><span class="tag">Docker</span></div>
+          <div class="project__links">
+            <a class="plink" href="https://portfolio.theo-birost.fr/clicker/" target="_blank" rel="noopener">Voir le projet
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          </div>
         </div>
       </article>
 
       <article class="project reveal">
         <div class="shot">
-          <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">cineaste — app</span></div>
-          <div class="shot__img"><span class="shot__ph">Cineaste</span><span class="shot__phk">Ajoute une capture</span></div>
+          <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">À venir</span></div>
+          <div class="shot__img"><span class="shot__ph">À venir</span><span class="shot__phk">Prochaine réalisation</span></div>
         </div>
         <div>
-          <span class="project__k">Application web</span>
-          <h3>Cineaste</h3>
-          <span class="project__ctx">Architecture full-stack · Vue 3</span>
-          <p>Application de découverte de films : recherche instantanée, fiches détaillées et données à jour via API. Une base full-stack complète, du front Vue 3 jusqu'à la logique serveur.</p>
-          <div class="tags"><span class="tag">Vue 3</span><span class="tag">Vite</span><span class="tag">JavaScript</span><span class="tag">API</span></div>
-          <a class="plink" href="https://portfolio.theo-birost.fr" target="_blank" rel="noopener">Voir le projet
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          <span class="project__k">À venir</span>
+          <h3>Prochain projet</h3>
+          <span class="project__ctx">Nouvelle réalisation en préparation</span>
+          <p>Un nouveau projet est en cours de développement — les détails arrivent bientôt.</p>
+          <p class="project__role"><b>Mon rôle</b>Conception &amp; développement</p>
+          <div class="tags"><span class="tag">Bientôt</span></div>
+          <div class="project__links">
+            <span class="plink" style="opacity:.6">Bientôt disponible</span>
+          </div>
         </div>
       </article>
 
-      <article class="project reveal">
-        <div class="shot">
-          <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">dampierre-auto — boutique</span></div>
-          <div class="shot__img"><span class="shot__ph">Dampierre Auto</span><span class="shot__phk">Ajoute une capture</span></div>
-        </div>
-        <div>
-          <span class="project__k">E-commerce</span>
-          <h3>Dampierre Auto</h3>
-          <span class="project__ctx">Boutique en ligne · Interface sur-mesure</span>
-          <p>Boutique de pièces automobiles : catalogue structuré, panier et parcours d'achat sur-mesure, pensés pour la conversion et une navigation fluide.</p>
-          <div class="tags"><span class="tag">Vue</span><span class="tag">Vite</span><span class="tag">E-commerce</span><span class="tag">UX</span></div>
-          <a class="plink" href="https://portfolio.theo-birost.fr" target="_blank" rel="noopener">Voir le projet
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
-        </div>
-      </article>
+    </div>
 
+    <div class="subhead reveal">Autres projets — perso &amp; académiques</div>
+    <div class="mini-grid reveal">
+      <article class="mini">
+        <span class="mini__k">Projet perso · Solo</span>
+        <h3>Lanceur de dés</h3>
+        <p>Un simulateur de lancer de dés animé, pour m'entraîner sur la génération aléatoire, la manipulation du DOM et les animations CSS.</p>
+        <div class="tags"><span class="tag">HTML</span><span class="tag">Tailwind</span><span class="tag">JavaScript</span><span class="tag">PHP</span></div>
+        <a class="plink" href="https://portfolio.theo-birost.fr/roll-dice/" target="_blank" rel="noopener">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      </article>
+      <article class="mini">
+        <span class="mini__k">Projet perso · Solo</span>
+        <h3>Portfolio template</h3>
+        <p>Un template de portfolio en Tailwind et PHP, multilingue FR/EN, pensé pour être facile à reprendre et à adapter.</p>
+        <div class="tags"><span class="tag">Tailwind</span><span class="tag">PHP</span><span class="tag">JavaScript</span></div>
+        <a class="plink" href="https://portfolio.theo-birost.fr" target="_blank" rel="noopener">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      </article>
     </div>
   </div>
 </section>
@@ -576,10 +639,34 @@ img{max-width:100%;display:block}
           <div class="mrow"><span class="mk">Zone</span><span class="mv">France entière · Full remote</span></div>
         </div>
       </div>
-      <form class="form" id="cform">
-        <div class="field"><label for="cn">Nom</label><input id="cn" type="text" autocomplete="name" required></div>
-        <div class="field"><label for="ce">Email</label><input id="ce" type="email" autocomplete="email" required></div>
-        <div class="field"><label for="cm">Votre projet</label><textarea id="cm" required></textarea></div>
+      <form class="form" id="cform" method="post" action="send_mail.php">
+        <div class="field"><label for="cn">Nom</label><input id="cn" name="name" type="text" autocomplete="name" required maxlength="100"></div>
+        <div class="field"><label for="ce">Email</label><input id="ce" name="email" type="email" autocomplete="email" required maxlength="254"></div>
+        <div class="field"><label for="coffer">Offre qui vous intéresse</label>
+          <select id="coffer" name="offre">
+            <option value="">— Je ne sais pas encore —</option>
+            <option value="Offre 1 — Site vitrine">Offre 1 · Site vitrine</option>
+            <option value="Offre 2 — Boutique en ligne">Offre 2 · Boutique en ligne</option>
+            <option value="Offre 3 — Application web">Offre 3 · Application web</option>
+            <option value="Devis sur-mesure">Devis sur-mesure</option>
+          </select>
+        </div>
+        <div class="field"><label for="cmaint">Maintenance</label>
+          <select id="cmaint" name="maintenance">
+            <option value="">— À définir —</option>
+            <option value="Suivi mensuel (49 €/mois)">Suivi mensuel · 49 €/mois</option>
+            <option value="Pack d'heures">Pack d'heures</option>
+            <option value="On verra plus tard / besoin d'infos">On verra plus tard / besoin d'infos</option>
+          </select>
+        </div>
+        <div class="field"><label for="cm">Votre projet</label><textarea id="cm" name="message" required minlength="10" maxlength="5000"></textarea></div>
+        <input type="hidden" name="ts" value="<?= htmlspecialchars((string) $contactFormTs, ENT_QUOTES) ?>">
+        <input type="hidden" name="token" value="<?= htmlspecialchars($contactFormToken, ENT_QUOTES) ?>">
+        <div style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true">
+          <label for="website">Laisser ce champ vide</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="form__status" id="cstatus" role="status" aria-live="polite"></div>
         <button type="submit" class="btn btn-accent btn-lg" style="justify-content:center">Envoyer ma demande
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
@@ -614,11 +701,16 @@ document.querySelectorAll('.faq__q').forEach(function(q){
  var it=q.parentElement,a=q.nextElementSibling,open=it.classList.toggle('open');
  q.setAttribute('aria-expanded',String(open));
  a.style.maxHeight=open?a.scrollHeight+'px':0;});});
-// Formulaire -> mailto (sans back-end)
-(function(){var f=document.getElementById('cform');f.addEventListener('submit',function(e){e.preventDefault();
- var n=document.getElementById('cn').value.trim(),em=document.getElementById('ce').value.trim(),m=document.getElementById('cm').value.trim();
- var body=encodeURIComponent('Nom : '+n+'\nEmail : '+em+'\n\n'+m);
- window.location.href='mailto:contact@theo-birost.fr?subject='+encodeURIComponent('Demande de devis — '+(n||'projet web'))+'&body='+body;});})();
+// Formulaire -> envoi via send_mail.php (back-end PHP + SMTP)
+(function(){var f=document.getElementById('cform');if(!f)return;
+ var s=document.getElementById('cstatus'),b=f.querySelector('button[type=submit]');
+ f.addEventListener('submit',function(e){e.preventDefault();b.disabled=true;
+  fetch('send_mail.php',{method:'POST',body:new FormData(f)})
+   .then(function(r){return r.text().then(function(t){return{ok:r.ok,t:t};});})
+   .then(function(res){s.className='form__status '+(res.ok?'ok':'err');s.textContent=res.t;if(res.ok)f.reset();})
+   .catch(function(){s.className='form__status err';s.textContent='Une erreur est survenue. Merci de réessayer.';})
+   .finally(function(){b.disabled=false;});
+ });})();
 // Reveal
 (function(){if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.12});

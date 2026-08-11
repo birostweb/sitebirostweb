@@ -1,28 +1,57 @@
 # ============================================================
-#  birostweb.fr — image de production (site statique)
-#  Base durcie : nginx "unprivileged" => tourne en utilisateur non-root,
-#  écoute sur le port 8080 (aucun privilège root nécessaire).
+#  birostweb.fr — image de production (PHP + Apache)
+#  Le formulaire de contact envoie par SMTP (PHPMailer), donc on a besoin
+#  d'un back-end PHP. HTTPS/TLS est géré en amont par Traefik (Dokploy).
 # ============================================================
-FROM nginxinc/nginx-unprivileged:1.27-alpine
+FROM php:8.2-apache
 
-# Métadonnées
 LABEL org.opencontainers.image.title="birostweb" \
-      org.opencontainers.image.description="Site vitrine Theo Birost - developpeur web full-stack" \
-      org.opencontainers.image.url="https://birostweb.fr" \
-      org.opencontainers.image.licenses="UNLICENSED"
+      org.opencontainers.image.description="Site vitrine Birostweb - Theo Birost, developpeur web full-stack" \
+      org.opencontainers.image.url="https://birostweb.fr"
 
-# Config nginx durcie
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+# Modules Apache nécessaires (réécriture, en-têtes de sécurité, cache)
+RUN a2enmod rewrite headers expires
 
-# Contenu du site
-COPY site/ /usr/share/nginx/html/
+# ServerName pour éviter les warnings
+RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
+    && a2enconf servername
 
-# Le port applicatif (non privilégié)
+# Extensions PHP + unzip pour Composer
+RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends \
+        libzip-dev unzip \
+    && docker-php-ext-install zip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Composer
+COPY --from=composer:lts /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+# Dépendances PHP (PHPMailer, phpdotenv)
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+
+# Code du site (tout le contenu de site/ devient la racine web)
+COPY site/ ./
+
+# Autoriser les .htaccess sur la racine web
+RUN sed -i '/<\/VirtualHost>/i \
+    <Directory /var/www/html>\n\
+        Options -Indexes +FollowSymLinks\n\
+        AllowOverride All\n\
+        Require all granted\n\
+    </Directory>' /etc/apache2/sites-available/000-default.conf
+
+# Permissions
+RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+
+# Port applicatif (repris par l'entrypoint via $PORT, défaut 8080)
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
 EXPOSE 8080
 
-# Healthcheck : Dokploy/Docker vérifie que nginx répond
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD ["/bin/sh","-c","wget -q -O /dev/null http://127.0.0.1:8080/healthz || exit 1"]
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD ["/bin/sh","-c","wget -q -O /dev/null http://127.0.0.1:${PORT:-8080}/ || exit 1"]
 
-# (l'utilisateur nginx non-root et la commande de lancement sont
-#  déjà définis par l'image de base)
+ENTRYPOINT ["entrypoint.sh"]
+CMD ["apache2-foreground"]
