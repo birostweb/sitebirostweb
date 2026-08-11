@@ -18,7 +18,7 @@ RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
 
 # Extensions PHP + unzip pour Composer
 RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends \
-        libzip-dev unzip \
+        libzip-dev unzip curl \
     && docker-php-ext-install zip \
     && rm -rf /var/lib/apt/lists/*
 
@@ -51,7 +51,7 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD ["/bin/sh","-c","wget -q -O /dev/null http://127.0.0.1:${PORT:-8080}/ || exit 1"]
+  CMD ["/bin/sh","-c","curl -fsS http://127.0.0.1:${PORT:-8080}/ >/dev/null || exit 1"]
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["apache2-foreground"]
