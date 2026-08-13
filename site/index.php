@@ -35,8 +35,8 @@ $contactFormToken = hash_hmac('sha256', (string) $contactFormTs, $_ENV['CONTACT_
 <meta name="twitter:title" content="Théo Birost — Développeur web full-stack">
 <meta name="twitter:description" content="Des sites web sur-mesure pensés pour vous rapporter des clients. Devis gratuit sous 48h.">
 <meta name="twitter:image" content="https://birostweb.fr/og-image.png">
-<!-- Favicon Birostweb -->
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<!-- Favicon Birostweb (logo BW) -->
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <!-- Polices auto-hébergées (RGPD : aucune requête vers Google) -->
 <link rel="preload" href="/fonts/ibmplexsans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -431,28 +431,24 @@ img{max-width:100%;display:block}
         </div>
       </article>
 
-      <article class="project reveal">
-        <div class="shot">
-          <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">À venir</span></div>
-          <div class="shot__img"><span class="shot__ph">À venir</span><span class="shot__phk">Prochaine réalisation</span></div>
-        </div>
-        <div>
-          <span class="project__k">À venir</span>
-          <h3>Prochain projet</h3>
-          <span class="project__ctx">Nouvelle réalisation en préparation</span>
-          <p>Un nouveau projet est en cours de développement — les détails arrivent bientôt.</p>
-          <p class="project__role"><b>Mon rôle</b>Conception &amp; développement</p>
-          <div class="tags"><span class="tag">Bientôt</span></div>
-          <div class="project__links">
-            <span class="plink" style="opacity:.6">Bientôt disponible</span>
-          </div>
-        </div>
-      </article>
-
     </div>
 
-    <div class="subhead reveal">Autres projets — perso &amp; académiques</div>
+    <div class="subhead reveal">Autres projets — perso</div>
     <div class="mini-grid reveal">
+      <article class="mini">
+        <span class="mini__k">Application web · Full-stack</span>
+        <h3>Budget</h3>
+        <p>Gestion de budget et de dettes : solde, stratégies de remboursement (avalanche / snowball), cartes et objectifs. Connexion sans mot de passe (code email).</p>
+        <div class="tags"><span class="tag">Vue 3</span><span class="tag">Tailwind</span><span class="tag">PHP</span><span class="tag">Docker</span></div>
+        <a class="plink" href="https://budget.theo-birost.fr" target="_blank" rel="noopener">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      </article>
+      <article class="mini">
+        <span class="mini__k">Jeu web · Solo</span>
+        <h3>Empire Culturel</h3>
+        <p>Jeu incrémental de collection de monuments : farm, boosters, arbre technologique et classement. Parties sauvegardées en local.</p>
+        <div class="tags"><span class="tag">Vue 3</span><span class="tag">Tailwind</span><span class="tag">JavaScript</span></div>
+        <a class="plink" href="https://carte.theo-birost.fr" target="_blank" rel="noopener">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      </article>
       <article class="mini">
         <span class="mini__k">Projet perso · Solo</span>
         <h3>Lanceur de dés</h3>
