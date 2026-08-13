@@ -286,10 +286,11 @@ try {
     $mail->setFrom($_ENV['SMTP_USERNAME'], 'Formulaire birostweb.fr');
     $mail->addAddress('contact@theo-birost.fr', 'Théo Birost');
     $mail->addReplyTo($email, $name);
+    $mail->addCustomHeader('X-Mail-Source', 'birostweb.fr');
 
     $subjectOffre = $offre !== '' ? " [$offre]" : '';
     $mail->isHTML(true);
-    $mail->Subject = "Nouvelle demande de $name$subjectOffre";
+    $mail->Subject = "[birostweb.fr] Nouvelle demande de $name$subjectOffre";
 
     // Message jugé douteux : on le marque pour que la boîte le filtre en indésirables.
     if ($spam['flag']) {

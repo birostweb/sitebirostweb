@@ -16,7 +16,7 @@ $contactFormToken = hash_hmac('sha256', (string) $contactFormTs, $_ENV['CONTACT_
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Théo Birost — Développeur web full-stack · Sites qui convertissent</title>
-<meta name="description" content="Développeur web full-stack indépendant, en full remote partout en France. Je crée des sites et applications sur-mesure, rapides et pensés pour convertir vos visiteurs en clients. Devis gratuit sous 48h.">
+<meta name="description" content="Développeur web indépendant, en télétravail partout en France. Je crée des sites et applications sur-mesure, soignés et rapides, du premier échange à la mise en ligne. Devis gratuit sous 48h.">
 <link rel="canonical" href="https://birostweb.fr/">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Théo Birost">
@@ -350,8 +350,8 @@ img{max-width:100%;display:block}
   <div class="wrap hero__grid">
     <div>
       <span class="chip"><b></b>Disponible · Devis sous 48h</span>
-      <h1>Un site web qui vous rapporte <span class="accent">des clients</span>.</h1>
-      <p class="hero__sub">Développeur web full-stack indépendant, en full remote partout en France. Je conçois, code et déploie des sites sur-mesure — rapides, soignés et pensés pour convertir vos visiteurs.</p>
+      <h1>Un site web qui vous ressemble, et qui <span class="accent">vous ramène des clients</span>.</h1>
+      <p class="hero__sub">Je suis développeur web indépendant, en télétravail partout en France. Je crée des sites sur-mesure, soignés et rapides, et je m'occupe de tout : du premier échange jusqu'à la mise en ligne. Sans jargon inutile, sans mauvaise surprise.</p>
       <div class="hero__cta">
         <a href="#contact" class="btn btn-accent btn-lg">Demander un devis gratuit
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -376,10 +376,10 @@ img{max-width:100%;display:block}
 <!-- ============ BENEFITS ============ -->
 <div class="bene">
   <div class="wrap bene__grid">
-    <div class="bcell"><span class="n">01</span><div class="t">Un seul interlocuteur, de A à Z</div></div>
+    <div class="bcell"><span class="n">01</span><div class="t">Un seul interlocuteur, du début à la fin</div></div>
     <div class="bcell"><span class="n">02</span><div class="t">Livré en 2 à 4 semaines</div></div>
-    <div class="bcell"><span class="n">03</span><div class="t">Optimisé Google &amp; mobile</div></div>
-    <div class="bcell"><span class="n">04</span><div class="t">Des prix clairs, dès le départ</div></div>
+    <div class="bcell"><span class="n">03</span><div class="t">Rapide, sur mobile comme sur Google</div></div>
+    <div class="bcell"><span class="n">04</span><div class="t">Un prix clair, annoncé dès le départ</div></div>
   </div>
 </div>
 
@@ -388,8 +388,8 @@ img{max-width:100%;display:block}
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Réalisations</span>
-      <h2 class="h2 reveal">Des projets réels, livrés et en ligne.</h2>
-      <p class="lead reveal">Du site client à l'application développée de bout en bout.</p>
+      <h2 class="h2 reveal">Des projets réels, en ligne pour de vrai.</h2>
+      <p class="lead reveal">Du site client livré en production aux applis que je construis moi-même : un aperçu concret de ce que je sais faire.</p>
     </div>
     <div class="projects">
 
@@ -473,34 +473,34 @@ img{max-width:100%;display:block}
     <div class="sec-head">
       <span class="eyebrow">Offres &amp; tarifs</span>
       <h2 class="h2 reveal">Des offres claires, au prix affiché.</h2>
-      <p class="lead reveal">Vous savez exactement ce que vous payez, et pour quoi. Prix de départ, personnalisation sur devis.</p>
+      <p class="lead reveal">Ce sont des prix de départ, juste pour vous donner un ordre d'idée. Le périmètre, la techno et le contenu se décident ensemble, et vous avez un devis précis avant de vous engager.</p>
     </div>
     <div class="offers reveal">
 
       <article class="offer offer--feat">
         <span class="offer__badge">Le plus demandé</span>
-        <div class="offer__top"><span class="offer__n">OFFRE 01</span><span class="tag">Sur-mesure · WordPress</span></div>
+        <div class="offer__top"><span class="offer__n">OFFRE 01</span><span class="tag">Site vitrine</span></div>
         <h3>Site vitrine</h3>
-        <p class="offer__promise">Un site pro, rapide et bien référencé — codé à la main, ou sous WordPress si vous voulez gérer votre contenu vous-même.</p>
-        <div class="offer__inc"><b>Inclus</b>Design sur maquette, intégration soignée, version mobile, SEO &amp; performance, mise en ligne et prise en main.</div>
-        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">890 €</div><div class="note">WordPress autonome ou multilingue dès 1 200 €</div></div>
+        <p class="offer__promise">Un site propre et rapide pour présenter votre activité et donner confiance. Codé sur-mesure ou sur un outil que vous pourrez mettre à jour vous-même : on choisit ensemble ce qui vous convient le mieux.</p>
+        <div class="offer__inc"><b>Inclus</b>Maquette validée avec vous, intégration soignée, version mobile, bases du référencement, mise en ligne et prise en main.</div>
+        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">890 €</div><div class="note">Site à gérer vous-même ou version multilingue à partir de 1 200 €</div></div>
         <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
       </article>
 
       <article class="offer">
-        <div class="offer__top"><span class="offer__n">OFFRE 02</span><span class="tag">E-commerce</span></div>
+        <div class="offer__top"><span class="offer__n">OFFRE 02</span><span class="tag">Boutique en ligne</span></div>
         <h3>Boutique en ligne</h3>
-        <p class="offer__promise">Une boutique moderne, rapide et pensée pour la conversion, sans les lourdeurs d'un template générique.</p>
-        <div class="offer__inc"><b>Inclus</b>Catalogue, paiement sécurisé, gestion des livraisons, back-office simple, optimisation mobile &amp; vitesse.</div>
-        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">1 500 €</div><div class="note">Front Vue sur-mesure dès 3 000 €</div></div>
+        <p class="offer__promise">Une boutique claire et rapide, où vos clients trouvent et commandent sans se compliquer la vie. Sur une base e-commerce solide ou entièrement sur-mesure, selon vos besoins.</p>
+        <div class="offer__inc"><b>Inclus</b>Catalogue, paiement sécurisé, gestion des commandes et des livraisons, back-office simple, version mobile.</div>
+        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">1 500 €</div><div class="note">Version entièrement sur-mesure à partir de 3 000 €</div></div>
         <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
       </article>
 
       <article class="offer">
-        <div class="offer__top"><span class="offer__n">OFFRE 03</span><span class="tag">Vue 3 · Full-stack</span></div>
+        <div class="offer__top"><span class="offer__n">OFFRE 03</span><span class="tag">Application · Full-stack</span></div>
         <h3>Application web</h3>
-        <p class="offer__promise">Quand un site vitrine ne suffit plus : un outil sur-mesure, pensé et codé de A à Z pour votre besoin.</p>
-        <div class="offer__inc"><b>Inclus</b>Cadrage, UX/UI, développement full-stack (Vue 3, Node, MySQL), API, déploiement et suivi.</div>
+        <p class="offer__promise">Quand un simple site ne suffit plus : un outil construit autour de votre façon de travailler, pour vous faire gagner du temps au quotidien.</p>
+        <div class="offer__inc"><b>Inclus</b>On cadre le besoin ensemble, puis je m'occupe du design, du développement (côté site et côté serveur), de la mise en ligne et du suivi.</div>
         <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">2 500 €</div><div class="note">Chiffré précisément selon le périmètre</div></div>
         <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
       </article>
@@ -512,7 +512,7 @@ img{max-width:100%;display:block}
       <div>
         <span class="custom__k">Projet sur-mesure</span>
         <h3>Un besoin qui ne rentre pas dans une case&nbsp;?</h3>
-        <p>Refonte, migration, renfort pour une agence, outil métier hybride, idée encore floue à cadrer… On en discute, j'étudie le projet et vous recevez un devis clair et détaillé — sous 48h, sans engagement.</p>
+        <p>Refonte, migration, coup de main pour une agence, outil métier un peu particulier, ou idée encore floue à cadrer… Écrivez-moi ce que vous avez en tête : je regarde ce qui est possible et vous recevez un devis clair sous 48h, sans engagement.</p>
       </div>
       <a href="#contact" class="btn btn-accent btn-lg">Demander un devis gratuit
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -524,7 +524,7 @@ img{max-width:100%;display:block}
       <div class="maint__head">
         <span class="eyebrow">Après la mise en ligne</span>
         <h3>Maintenance mensuelle, sans y penser.</h3>
-        <p>Un site n'est jamais figé : il doit rester à jour, sécurisé et rapide. Choisissez le niveau de suivi qui vous convient — et changez ou arrêtez quand vous voulez.</p>
+        <p>Un site vit : il faut le garder à jour, sauvegardé et sécurisé. Prenez le niveau de suivi qui vous va, et changez ou arrêtez quand vous voulez.</p>
       </div>
       <div class="plans">
 
@@ -575,9 +575,9 @@ img{max-width:100%;display:block}
       <p class="lead reveal">Du premier échange à la mise en ligne, vous savez toujours où on en est.</p>
     </div>
     <div class="steps reveal">
-      <div class="step"><span class="n">01</span><h3>Échange &amp; devis</h3><p>On parle de votre projet, de vos objectifs et de votre budget. Vous recevez un devis clair sous 48h — sans engagement.</p></div>
-      <div class="step"><span class="n">02</span><h3>Design &amp; développement</h3><p>Maquettes validées ensemble, puis un code propre et sur-mesure. Rien n'est développé avant d'être validé.</p></div>
-      <div class="step"><span class="n">03</span><h3>Mise en ligne &amp; suivi</h3><p>Déploiement, tests et formation. Une fois en ligne, je reste dispo pour faire évoluer votre site.</p></div>
+      <div class="step"><span class="n">01</span><h3>On échange</h3><p>On prend le temps de parler de votre projet, de vos objectifs et de votre budget. Vous recevez un devis clair sous 48h, sans engagement.</p></div>
+      <div class="step"><span class="n">02</span><h3>Design &amp; développement</h3><p>On valide les maquettes ensemble, puis je code proprement, sur-mesure. Rien n'avance sans votre feu vert.</p></div>
+      <div class="step"><span class="n">03</span><h3>Mise en ligne &amp; suivi</h3><p>Mise en ligne, tests, et un petit tour du propriétaire pour que vous soyez à l'aise. Ensuite, je reste là pour faire évoluer votre site.</p></div>
     </div>
     <div class="stack reveal">
       <span class="tag">Vue 3</span><span class="tag">Vite</span><span class="tag">JavaScript</span><span class="tag">Tailwind</span><span class="tag">Node.js</span><span class="tag">MySQL</span><span class="tag">PHP</span><span class="tag">WordPress</span><span class="tag">Docker</span><span class="tag">Figma</span>
@@ -586,7 +586,8 @@ img{max-width:100%;display:block}
 </section>
 
 <!-- ============ TEMOIGNAGES ============ -->
-<section class="section section--paper">
+<!-- Section masquée en attendant de vrais avis clients. Pour la réafficher : retirer style="display:none". -->
+<section class="section section--paper" style="display:none">
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Ils me font confiance</span>
@@ -610,9 +611,9 @@ img{max-width:100%;display:block}
     </div>
     <div class="faq reveal">
       <div class="faq__item"><button class="faq__q">Combien de temps pour créer mon site ?<span class="ic"></span></button><div class="faq__a"><p>Comptez 2 à 4 semaines pour un site vitrine, selon le nombre de pages et le contenu. Pour une application ou une boutique, le délai est cadré précisément dans le devis.</p></div></div>
-      <div class="faq__item"><button class="faq__q">Je pars de zéro, vous m'accompagnez ?<span class="ic"></span></button><div class="faq__a"><p>Oui, de A à Z. Je vous guide sur l'arborescence, le contenu et le design. Pas besoin de connaître le web : vous restez décideur, je m'occupe de la technique.</p></div></div>
+      <div class="faq__item"><button class="faq__q">Je pars de zéro, vous m'accompagnez ?<span class="ic"></span></button><div class="faq__a"><p>Oui, complètement. Je vous guide sur la structure du site, le contenu et le design. Pas besoin de vous y connaître : vous décidez, je m'occupe de la technique.</p></div></div>
       <div class="faq__item"><button class="faq__q">Le devis est-il vraiment gratuit ?<span class="ic"></span></button><div class="faq__a"><p>Totalement, et sans engagement. On échange sur votre projet, et vous recevez une proposition claire avec périmètre, prix et délai sous 48h.</p></div></div>
-      <div class="faq__item"><button class="faq__q">À qui appartient le site une fois livré ?<span class="ic"></span></button><div class="faq__a"><p>À vous, entièrement — code, contenu, nom de domaine et hébergement sont à votre nom. Vous n'êtes jamais prisonnier d'un prestataire.</p></div></div>
+      <div class="faq__item"><button class="faq__q">À qui appartient le site une fois livré ?<span class="ic"></span></button><div class="faq__a"><p>Tout est à vous : le code, le contenu, le nom de domaine et l'hébergement, à votre nom. Vous n'êtes jamais coincé chez un prestataire.</p></div></div>
       <div class="faq__item"><button class="faq__q">Et après la mise en ligne ?<span class="ic"></span></button><div class="faq__a"><p>Vous pouvez gérer le site vous-même, ou souscrire à la maintenance (dès 49 €/mois) : mises à jour, sécurité, sauvegardes et évolutions. Je reste joignable dans tous les cas.</p></div></div>
     </div>
   </div>
@@ -625,7 +626,7 @@ img{max-width:100%;display:block}
       <div>
         <span class="eyebrow" style="margin-bottom:16px">Contact</span>
         <h2 class="h2">Parlons de votre projet.</h2>
-        <p class="lead">Un site à créer ou à refondre, une appli à construire, ou juste une question ? Écrivez-moi — réponse et devis sous 48h, sans engagement.</p>
+        <p class="lead">Un site à créer ou à refondre, une appli à construire, ou juste une question ? Écrivez-moi, même si votre idée est encore floue. Je réponds vite : sous 48h, sans engagement.</p>
         <div class="manifest">
           <div class="mrow"><span class="mk">Mail</span><span class="mv"><a href="mailto:contact@theo-birost.fr">contact@theo-birost.fr</a></span></div>
           <div class="mrow"><span class="mk">GitHub</span><span class="mv"><a href="https://github.com/theobirost" target="_blank" rel="noopener">github.com/theobirost</a></span></div>
