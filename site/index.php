@@ -629,8 +629,8 @@ img{max-width:100%;display:block}
         <p class="lead">Un site à créer ou à refondre, une appli à construire, ou juste une question ? Écrivez-moi, même si votre idée est encore floue. Je réponds vite : sous 48h, sans engagement.</p>
         <div class="manifest">
           <div class="mrow"><span class="mk">Mail</span><span class="mv"><a href="mailto:contact@theo-birost.fr">contact@theo-birost.fr</a></span></div>
-          <div class="mrow"><span class="mk">GitHub</span><span class="mv"><a href="https://github.com/theobirost" target="_blank" rel="noopener">github.com/theobirost</a></span></div>
-          <div class="mrow"><span class="mk">LinkedIn</span><span class="mv"><a href="https://www.linkedin.com/in/theobirost" target="_blank" rel="noopener">linkedin.com/in/theobirost</a></span></div>
+          <div class="mrow"><span class="mk">GitHub</span><span class="mv"><a href="https://github.com/birostweb" target="_blank" rel="noopener">github.com/birostweb</a></span></div>
+          <div class="mrow"><span class="mk">LinkedIn</span><span class="mv"><a href="https://www.linkedin.com/company/birostweb" target="_blank" rel="noopener">linkedin.com/company/birostweb</a></span></div>
           <!-- Remplace le handle Instagram ci-dessous par ton vrai compte une fois créé -->
           <div class="mrow"><span class="mk">Instagram</span><span class="mv"><a href="https://www.instagram.com/birost.web" target="_blank" rel="noopener">@birost.web</a></span></div>
           <div class="mrow"><span class="mk">Zone</span><span class="mv">France entière · Full remote</span></div>
