@@ -58,3 +58,6 @@ RewriteRule ^vendor/ - [F,L]
 
 # Autoriser explicitement /.well-known/
 RewriteRule ^\.well-known/ - [L]
+
+# 404 personnalisée
+ErrorDocument 404 /404.html

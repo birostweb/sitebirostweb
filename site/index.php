@@ -324,6 +324,14 @@ img{max-width:100%;display:block}
 .form__status.err{display:block;background:rgba(255,255,255,.04);border:1px solid var(--d-line);color:var(--d-dim)}
 
 @media (max-width:640px){.mini-grid{grid-template-columns:1fr}}
+
+/* ===== CTA sticky mobile ===== */
+.sticky-cta{display:none}
+@media (max-width:640px){
+  body{padding-bottom:74px}
+  .sticky-cta{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:70;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(229,226,214,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line)}
+  .sticky-cta .btn{flex:1;justify-content:center}
+}
 </style>
 </head>
 <body>
@@ -664,6 +672,7 @@ img{max-width:100%;display:block}
           <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
         </div>
         <div class="form__status" id="cstatus" role="status" aria-live="polite"></div>
+        <p style="font-family:var(--fm);font-size:11.5px;color:var(--d-dim);line-height:1.5;margin-top:-4px">En envoyant ce formulaire, vous acceptez d'être recontacté au sujet de votre demande. Voir la <a href="/mentions-legales.html" style="color:var(--accent)">politique de confidentialité</a>.</p>
         <button type="submit" class="btn btn-accent btn-lg" style="justify-content:center">Envoyer ma demande
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
@@ -673,13 +682,16 @@ img{max-width:100%;display:block}
 </section>
 </main>
 
+<!-- CTA sticky mobile (visible uniquement sur petit écran) -->
+<div class="sticky-cta"><a href="#contact" class="btn btn-accent">Demander un devis gratuit</a></div>
+
 <!-- ============ FOOTER ============ -->
 <footer class="footer">
   <div class="wrap">
     <div class="footer__in">
       <span class="footer__b">Théo Birost — Développeur web full-stack</span>
       <nav class="footer__l">
-        <a href="#realisations">Réalisations</a><a href="#offres">Offres</a><a href="#approche">Approche</a><a href="#faq">FAQ</a><a href="#contact">Contact</a><a href="#top">↑ Haut</a>
+        <a href="#realisations">Réalisations</a><a href="#offres">Offres</a><a href="#approche">Approche</a><a href="#faq">FAQ</a><a href="#contact">Contact</a><a href="/mentions-legales.html">Mentions légales</a><a href="#top">↑ Haut</a>
       </nav>
     </div>
     <div class="footer__meta"><span>© 2026 Théo Birost · France · Full remote</span><span>Micro-entreprise · Développement web sur-mesure</span></div>

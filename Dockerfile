@@ -12,6 +12,9 @@ LABEL org.opencontainers.image.title="birostweb" \
 # Modules Apache nécessaires (réécriture, en-têtes de sécurité, cache)
 RUN a2enmod rewrite headers expires
 
+# Config PHP de production (display_errors off, expose_php off, etc.)
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
 # ServerName pour éviter les warnings
 RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
     && a2enconf servername
