@@ -404,7 +404,7 @@ img{max-width:100%;display:block}
       <article class="project reveal">
         <div class="shot">
           <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">hydrogenbusinessforclimate.com</span></div>
-          <div class="shot__img"><img src="/img/hydrogen_website.png" alt="Site du Forum Hydrogen Business for Climate"></div>
+          <div class="shot__img"><img src="/img/hydrogen_website.webp" alt="Site du Forum Hydrogen Business for Climate" width="1400" height="804" loading="lazy" decoding="async"></div>
         </div>
         <div>
           <span class="project__k">Projet client · Stage</span>
@@ -423,7 +423,7 @@ img{max-width:100%;display:block}
       <article class="project reveal">
         <div class="shot">
           <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">clicker — jeu</span></div>
-          <div class="shot__img"><img src="/img/clicker_img.png" alt="Jeu du clicker"></div>
+          <div class="shot__img"><img src="/img/clicker_img.webp" alt="Jeu du clicker" width="1400" height="741" loading="lazy" decoding="async"></div>
         </div>
         <div>
           <span class="project__k">Projet perso · Solo</span>
@@ -672,7 +672,7 @@ img{max-width:100%;display:block}
             <option value="autre">Autre — je précise</option>
           </select>
           <div id="pack-custom" style="display:none;margin-top:10px">
-            <input id="chours" name="hours" type="number" min="1" max="500" inputmode="numeric" placeholder="Nombre d'heures (ex. 7)">
+            <input id="chours" name="hours" type="number" min="1" max="500" inputmode="numeric" aria-label="Nombre d'heures souhaité" placeholder="Nombre d'heures (ex. 7)">
             <div id="chours-price" style="font-family:var(--fm);font-size:12.5px;color:var(--d-dim);margin-top:8px"></div>
           </div>
         </div>
