@@ -327,6 +327,49 @@ try {
         . "Message :\n$message";
 
     $mail->send();
+
+    // --- Accusé de réception automatique au visiteur (best-effort : n'échoue pas la demande) ---
+    try {
+        $ack = new PHPMailer(true);
+        $ack->CharSet    = 'UTF-8';
+        $ack->isSMTP();
+        $ack->Host       = $_ENV['SMTP_HOST'];
+        $ack->SMTPAuth   = true;
+        $ack->Username   = $_ENV['SMTP_USERNAME'];
+        $ack->Password   = $_ENV['SMTP_PASSWORD'];
+        $ack->SMTPSecure = $_ENV['SMTP_SECURE'];
+        $ack->Port       = (int) $_ENV['SMTP_PORT'];
+        $ack->setFrom($_ENV['SMTP_USERNAME'], 'Théo Birost — Birostweb');
+        $ack->addAddress($email, $name);
+        $ack->addReplyTo('contact@theo-birost.fr', 'Théo Birost');
+        $ack->isHTML(true);
+        $ack->Subject = 'Bien reçu — je reviens vers vous sous 48h';
+        $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+        $ack->Body = <<<HTML
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"></head>
+<body style="margin:0;background-color:#E5E2D6;font-family:'Helvetica Neue',Arial,sans-serif;padding:32px 16px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background-color:#FBFAF6;border:1px solid #CFCABC;border-radius:12px;overflow:hidden;">
+<tr><td style="background-color:#231F20;padding:24px 30px;">
+<span style="display:inline-block;width:9px;height:9px;background-color:#F0451E;border-radius:50%;"></span>
+<span style="color:#F0EDE4;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-left:8px;">Birostweb</span>
+<div style="color:#F0EDE4;font-size:20px;font-weight:700;margin-top:12px;">Bien reçu, merci !</div>
+</td></tr>
+<tr><td style="padding:26px 30px;color:#231F20;font-size:15px;line-height:1.6;">
+Bonjour {$safeName},<br><br>
+Merci pour votre message, je l'ai bien reçu. Je reviens vers vous <b>sous 48h</b> (jours ouvrés) avec une première réponse ou un devis.<br><br>
+Si vous avez un document ou une précision à ajouter, répondez simplement à cet email.<br><br>
+À très vite,<br><b>Théo Birost</b><br>
+<a href="https://birostweb.fr" style="color:#F0451E;text-decoration:none;">birostweb.fr</a>
+</td></tr></table></td></tr></table>
+</body></html>
+HTML;
+        $ack->AltBody = "Bonjour $name,\n\nMerci pour votre message, je l'ai bien reçu. Je reviens vers vous sous 48h (jours ouvrés).\n\nÀ très vite,\nThéo Birost — birostweb.fr";
+        $ack->send();
+    } catch (Exception $e) {
+        // Ignoré : la notification principale, elle, est bien partie.
+    }
+
     http_response_code(200);
     echo "Merci ! Votre demande a bien été envoyée. Je vous réponds sous 48h.";
 } catch (Exception $e) {

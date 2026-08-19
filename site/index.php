@@ -42,6 +42,8 @@ $contactFormToken = hash_hmac('sha256', (string) $contactFormTs, $_ENV['CONTACT_
 <link rel="preload" href="/fonts/ibmplexsans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/ibmplexsanscondensed-700-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="manifest" href="/site.webmanifest">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Birostweb — Théo Birost","description":"Développeur web full-stack indépendant : sites vitrines, boutiques et applications sur-mesure, du design au déploiement.","url":"https://birostweb.fr","email":"contact@theo-birost.fr","areaServed":"FR","founder":{"@type":"Person","name":"Théo Birost"},"sameAs":["https://github.com/birostweb","https://www.linkedin.com/company/birostweb","https://www.instagram.com/birost.web"],"priceRange":"€€"}</script>
 <style>
 /* ================= TOKENS ================= */
 :root{
@@ -409,7 +411,7 @@ img{max-width:100%;display:block}
         <div>
           <span class="project__k">Projet client · Stage</span>
           <h3>Forum Hydrogen Business for Climate</h3>
-          <span class="project__ctx">Événement B2B international · Refonte complète</span>
+          <span class="project__ctx">Réalisé pour AER BFC · Événement B2B international</span>
           <p>Refonte intégrale du site d'un forum international de la filière hydrogène : bascule bilingue FR/EN, blocs sur-mesure (intervenants, exposants, presse) et pages optimisées pour charger vite malgré un contenu dense.</p>
           <p class="project__role"><b>Mon rôle</b>Seul développeur sur le projet, de l'intégration au déploiement, pendant mon stage chez AER BFC.</p>
           <div class="tags"><span class="tag">WordPress</span><span class="tag">ACF</span><span class="tag">CPT UI</span><span class="tag">TranslatePress</span><span class="tag">PHP</span><span class="tag">SEO</span></div>
@@ -559,6 +561,7 @@ img{max-width:100%;display:block}
             <li>Modifications, contenu &amp; nouvelles pages</li>
             <li>Corrections et petits développements</li>
             <li>Sans abonnement, à la carte</li>
+            <li>+ toutes les options du suivi mensuel</li>
           </ul>
           <div class="plan__packs">
             <span class="pk-lbl">Packs dégressifs</span>
@@ -569,7 +572,7 @@ img{max-width:100%;display:block}
         </article>
 
       </div>
-      <p class="maint__note">Sans engagement — le suivi mensuel s'arrête quand vous voulez, et les heures d'un pack restent valables 12 mois.</p>
+      <p class="maint__note">Sans engagement — le suivi mensuel s'arrête quand vous voulez, et les heures d'un pack restent valables 24 mois.</p>
     </div>
   </div>
 </section>
@@ -635,6 +638,11 @@ img{max-width:100%;display:block}
         <span class="eyebrow" style="margin-bottom:16px">Contact</span>
         <h2 class="h2">Parlons de votre projet.</h2>
         <p class="lead">Un site à créer ou à refondre, une appli à construire, ou juste une question ? Écrivez-moi, même si votre idée est encore floue. Je réponds vite : sous 48h, sans engagement.</p>
+        <!-- ⚠️ À COMPLÉTER : remplace l'URL par ton vrai lien de réservation (Cal.com ou Calendly) -->
+        <a href="https://cal.com/birostweb" target="_blank" rel="noopener" class="btn btn-ghost" style="margin:4px 0 4px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v3M16 2v3M3.5 9h17M5 5h14a1.5 1.5 0 011.5 1.5v13A1.5 1.5 0 0119 21H5a1.5 1.5 0 01-1.5-1.5v-13A1.5 1.5 0 015 5z"/></svg>
+          Ou réservez un appel de 15 min
+        </a>
         <div class="manifest">
           <div class="mrow"><span class="mk">Mail</span><span class="mv"><a href="mailto:contact@theo-birost.fr">contact@theo-birost.fr</a></span></div>
           <div class="mrow"><span class="mk">GitHub</span><span class="mv"><a href="https://github.com/birostweb" target="_blank" rel="noopener">github.com/birostweb</a></span></div>
@@ -703,7 +711,7 @@ img{max-width:100%;display:block}
     <div class="footer__in">
       <span class="footer__b">Théo Birost — Développeur web full-stack</span>
       <nav class="footer__l">
-        <a href="#realisations">Réalisations</a><a href="#offres">Offres</a><a href="#approche">Approche</a><a href="#faq">FAQ</a><a href="#contact">Contact</a><a href="/mentions-legales.html">Mentions légales</a><a href="#top">↑ Haut</a>
+        <a href="#realisations">Réalisations</a><a href="#offres">Offres</a><a href="#approche">Approche</a><a href="#faq">FAQ</a><a href="#contact">Contact</a><a href="/mentions-legales.html">Mentions légales</a><a href="/cgv.html">CGV</a><a href="#top">↑ Haut</a>
       </nav>
     </div>
     <div class="footer__meta"><span>© 2026 Théo Birost · France · Full remote</span><span>Micro-entreprise · Développement web sur-mesure</span></div>
