@@ -480,7 +480,7 @@ img{max-width:100%;display:block}
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Offres &amp; tarifs</span>
-      <h2 class="h2 reveal">Des offres claires, au prix affiché.</h2>
+      <h2 class="h2 reveal">Des offres claires, un prix de départ affiché.</h2>
       <p class="lead reveal">Ce sont des prix de départ, juste pour vous donner un ordre d'idée. Le périmètre, la techno et le contenu se décident ensemble, et vous avez un devis précis avant de vous engager.</p>
     </div>
     <div class="offers reveal">
@@ -490,8 +490,8 @@ img{max-width:100%;display:block}
         <div class="offer__top"><span class="offer__n">OFFRE 01</span><span class="tag">Site vitrine</span></div>
         <h3>Site vitrine</h3>
         <p class="offer__promise">Un site propre et rapide pour présenter votre activité et donner confiance. Codé sur-mesure ou sur un outil que vous pourrez mettre à jour vous-même : on choisit ensemble ce qui vous convient le mieux.</p>
-        <div class="offer__inc"><b>Inclus</b>Maquette validée avec vous, intégration soignée, version mobile, bases du référencement, mise en ligne et prise en main.</div>
-        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">890 €</div><div class="note">Site à gérer vous-même ou version multilingue à partir de 1 200 €</div></div>
+        <div class="offer__inc"><b>Inclus</b>Design, intégration responsive, référencement de base et mise en ligne. Le périmètre exact est détaillé dans le devis.</div>
+        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">1 200 €</div><div class="note">Version multilingue ou à gérer soi-même : sur devis</div></div>
         <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
       </article>
 
@@ -499,8 +499,8 @@ img{max-width:100%;display:block}
         <div class="offer__top"><span class="offer__n">OFFRE 02</span><span class="tag">Boutique en ligne</span></div>
         <h3>Boutique en ligne</h3>
         <p class="offer__promise">Une boutique claire et rapide, où vos clients trouvent et commandent sans se compliquer la vie. Sur une base e-commerce solide ou entièrement sur-mesure, selon vos besoins.</p>
-        <div class="offer__inc"><b>Inclus</b>Catalogue, paiement sécurisé, gestion des commandes et des livraisons, back-office simple, version mobile.</div>
-        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">1 500 €</div><div class="note">Version entièrement sur-mesure à partir de 3 000 €</div></div>
+        <div class="offer__inc"><b>Inclus</b>Catalogue, paiement sécurisé et parcours d'achat, avec un back-office simple à gérer. Le détail est calé dans le devis.</div>
+        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">1 900 €</div><div class="note">Version 100 % sur-mesure : sur devis</div></div>
         <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
       </article>
 
@@ -508,8 +508,8 @@ img{max-width:100%;display:block}
         <div class="offer__top"><span class="offer__n">OFFRE 03</span><span class="tag">Application · Full-stack</span></div>
         <h3>Application web</h3>
         <p class="offer__promise">Quand un simple site ne suffit plus : un outil construit autour de votre façon de travailler, pour vous faire gagner du temps au quotidien.</p>
-        <div class="offer__inc"><b>Inclus</b>On cadre le besoin ensemble, puis je m'occupe du design, du développement (côté site et côté serveur), de la mise en ligne et du suivi.</div>
-        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">2 500 €</div><div class="note">Chiffré précisément selon le périmètre</div></div>
+        <div class="offer__inc"><b>Inclus</b>Cadrage du besoin, design, développement et mise en ligne. Le périmètre précis est défini ensemble dans le devis.</div>
+        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">3 000 €</div><div class="note">Chiffré précisément selon le périmètre</div></div>
         <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
       </article>
 
@@ -539,7 +539,7 @@ img{max-width:100%;display:block}
         <article class="plan plan--feat">
           <span class="plan__badge">Recommandé</span>
           <div class="plan__name">Suivi mensuel</div>
-          <div class="plan__price">49 €<span> / mois</span></div>
+          <div class="plan__price">40 €<span> / mois</span></div>
           <div class="plan__for">Un site à jour, sûr et toujours en ligne</div>
           <ul class="plan__list">
             <li>Mises à jour &amp; sécurité</li>
@@ -553,7 +553,7 @@ img{max-width:100%;display:block}
 
         <article class="plan">
           <div class="plan__name">Pack d'heures</div>
-          <div class="plan__price">45 €<span> / heure</span></div>
+          <div class="plan__price">40 €<span> / heure</span></div>
           <div class="plan__for">Des modifs &amp; évolutions quand vous voulez</div>
           <ul class="plan__list">
             <li>Modifications, contenu &amp; nouvelles pages</li>
@@ -562,8 +562,8 @@ img{max-width:100%;display:block}
           </ul>
           <div class="plan__packs">
             <span class="pk-lbl">Packs dégressifs</span>
-            <div class="plan__pack"><span class="a">Pack 5 h</span><span class="b">210 €<small>42 €/h</small></span></div>
-            <div class="plan__pack"><span class="a">Pack 10 h</span><span class="b">390 €<small>39 €/h</small></span></div>
+            <div class="plan__pack"><span class="a">Pack 5 h</span><span class="b">185 €<small>37 €/h</small></span></div>
+            <div class="plan__pack"><span class="a">Pack 10 h</span><span class="b">340 €<small>34 €/h</small></span></div>
           </div>
           <a href="#contact" class="btn btn-ghost">Commander des heures</a>
         </article>
@@ -622,7 +622,7 @@ img{max-width:100%;display:block}
       <div class="faq__item"><button class="faq__q">Je pars de zéro, vous m'accompagnez ?<span class="ic"></span></button><div class="faq__a"><p>Oui, complètement. Je vous guide sur la structure du site, le contenu et le design. Pas besoin de vous y connaître : vous décidez, je m'occupe de la technique.</p></div></div>
       <div class="faq__item"><button class="faq__q">Le devis est-il vraiment gratuit ?<span class="ic"></span></button><div class="faq__a"><p>Totalement, et sans engagement. On échange sur votre projet, et vous recevez une proposition claire avec périmètre, prix et délai sous 48h.</p></div></div>
       <div class="faq__item"><button class="faq__q">À qui appartient le site une fois livré ?<span class="ic"></span></button><div class="faq__a"><p>Tout est à vous : le code, le contenu, le nom de domaine et l'hébergement, à votre nom. Vous n'êtes jamais coincé chez un prestataire.</p></div></div>
-      <div class="faq__item"><button class="faq__q">Et après la mise en ligne ?<span class="ic"></span></button><div class="faq__a"><p>Vous pouvez gérer le site vous-même, ou souscrire à la maintenance (dès 49 €/mois) : mises à jour, sécurité, sauvegardes et évolutions. Je reste joignable dans tous les cas.</p></div></div>
+      <div class="faq__item"><button class="faq__q">Et après la mise en ligne ?<span class="ic"></span></button><div class="faq__a"><p>Vous pouvez gérer le site vous-même, ou souscrire à la maintenance (dès 40 €/mois) : mises à jour, sécurité, sauvegardes et évolutions. Je reste joignable dans tous les cas.</p></div></div>
     </div>
   </div>
 </section>
@@ -659,7 +659,7 @@ img{max-width:100%;display:block}
         <div class="field"><label for="cmaint">Maintenance</label>
           <select id="cmaint" name="maintenance">
             <option value="">— À définir —</option>
-            <option value="Suivi mensuel (49 €/mois)">Suivi mensuel · 49 €/mois</option>
+            <option value="Suivi mensuel (40 €/mois)">Suivi mensuel · 40 €/mois</option>
             <option value="Pack d'heures">Pack d'heures</option>
             <option value="On verra plus tard / besoin d'infos">On verra plus tard / besoin d'infos</option>
           </select>
