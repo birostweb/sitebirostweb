@@ -491,7 +491,7 @@ img{max-width:100%;display:block}
         <h3>Site vitrine</h3>
         <p class="offer__promise">Un site propre et rapide pour présenter votre activité et donner confiance. Codé sur-mesure ou sur un outil que vous pourrez mettre à jour vous-même : on choisit ensemble ce qui vous convient le mieux.</p>
         <div class="offer__inc"><b>Inclus</b>Design, intégration responsive, référencement de base et mise en ligne. Le périmètre exact est détaillé dans le devis.</div>
-        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">1 200 €</div><div class="note">Version multilingue ou à gérer soi-même : sur devis</div></div>
+        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">999 €</div><div class="note">Version multilingue ou à gérer soi-même : sur devis</div></div>
         <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
       </article>
 
@@ -500,7 +500,7 @@ img{max-width:100%;display:block}
         <h3>Boutique en ligne</h3>
         <p class="offer__promise">Une boutique claire et rapide, où vos clients trouvent et commandent sans se compliquer la vie. Sur une base e-commerce solide ou entièrement sur-mesure, selon vos besoins.</p>
         <div class="offer__inc"><b>Inclus</b>Catalogue, paiement sécurisé et parcours d'achat, avec un back-office simple à gérer. Le détail est calé dans le devis.</div>
-        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">1 900 €</div><div class="note">Version 100 % sur-mesure : sur devis</div></div>
+        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">1 899 €</div><div class="note">Version 100 % sur-mesure : sur devis</div></div>
         <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
       </article>
 
@@ -509,7 +509,7 @@ img{max-width:100%;display:block}
         <h3>Application web</h3>
         <p class="offer__promise">Quand un simple site ne suffit plus : un outil construit autour de votre façon de travailler, pour vous faire gagner du temps au quotidien.</p>
         <div class="offer__inc"><b>Inclus</b>Cadrage du besoin, design, développement et mise en ligne. Le périmètre précis est défini ensemble dans le devis.</div>
-        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">3 000 €</div><div class="note">Chiffré précisément selon le périmètre</div></div>
+        <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">2 999 €</div><div class="note">Chiffré précisément selon le périmètre</div></div>
         <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
       </article>
 
@@ -539,7 +539,7 @@ img{max-width:100%;display:block}
         <article class="plan plan--feat">
           <span class="plan__badge">Recommandé</span>
           <div class="plan__name">Suivi mensuel</div>
-          <div class="plan__price">40 €<span> / mois</span></div>
+          <div class="plan__price">39 €<span> / mois</span></div>
           <div class="plan__for">Un site à jour, sûr et toujours en ligne</div>
           <ul class="plan__list">
             <li>Mises à jour &amp; sécurité</li>
@@ -548,12 +548,12 @@ img{max-width:100%;display:block}
             <li>Petites corrections incluses</li>
             <li>Support par email</li>
           </ul>
-          <a href="#contact" class="btn btn-ghost">Souscrire au suivi</a>
+          <a href="#contact" class="btn btn-ghost" data-maint="suivi">Souscrire au suivi</a>
         </article>
 
         <article class="plan">
           <div class="plan__name">Pack d'heures</div>
-          <div class="plan__price">40 €<span> / heure</span></div>
+          <div class="plan__price">39 €<span> / heure</span></div>
           <div class="plan__for">Des modifs &amp; évolutions quand vous voulez</div>
           <ul class="plan__list">
             <li>Modifications, contenu &amp; nouvelles pages</li>
@@ -562,10 +562,10 @@ img{max-width:100%;display:block}
           </ul>
           <div class="plan__packs">
             <span class="pk-lbl">Packs dégressifs</span>
-            <div class="plan__pack"><span class="a">Pack 5 h</span><span class="b">185 €<small>37 €/h</small></span></div>
-            <div class="plan__pack"><span class="a">Pack 10 h</span><span class="b">340 €<small>34 €/h</small></span></div>
+            <div class="plan__pack"><span class="a">Pack 5 h</span><span class="b">175 €<small>35 €/h</small></span></div>
+            <div class="plan__pack"><span class="a">Pack 10 h</span><span class="b">320 €<small>32 €/h</small></span></div>
           </div>
-          <a href="#contact" class="btn btn-ghost">Commander des heures</a>
+          <a href="#contact" class="btn btn-ghost" data-maint="heures">Commander des heures</a>
         </article>
 
       </div>
@@ -622,7 +622,7 @@ img{max-width:100%;display:block}
       <div class="faq__item"><button class="faq__q">Je pars de zéro, vous m'accompagnez ?<span class="ic"></span></button><div class="faq__a"><p>Oui, complètement. Je vous guide sur la structure du site, le contenu et le design. Pas besoin de vous y connaître : vous décidez, je m'occupe de la technique.</p></div></div>
       <div class="faq__item"><button class="faq__q">Le devis est-il vraiment gratuit ?<span class="ic"></span></button><div class="faq__a"><p>Totalement, et sans engagement. On échange sur votre projet, et vous recevez une proposition claire avec périmètre, prix et délai sous 48h.</p></div></div>
       <div class="faq__item"><button class="faq__q">À qui appartient le site une fois livré ?<span class="ic"></span></button><div class="faq__a"><p>Tout est à vous : le code, le contenu, le nom de domaine et l'hébergement, à votre nom. Vous n'êtes jamais coincé chez un prestataire.</p></div></div>
-      <div class="faq__item"><button class="faq__q">Et après la mise en ligne ?<span class="ic"></span></button><div class="faq__a"><p>Vous pouvez gérer le site vous-même, ou souscrire à la maintenance (dès 40 €/mois) : mises à jour, sécurité, sauvegardes et évolutions. Je reste joignable dans tous les cas.</p></div></div>
+      <div class="faq__item"><button class="faq__q">Et après la mise en ligne ?<span class="ic"></span></button><div class="faq__a"><p>Vous pouvez gérer le site vous-même, ou souscrire à la maintenance (dès 39 €/mois) : mises à jour, sécurité, sauvegardes et évolutions. Je reste joignable dans tous les cas.</p></div></div>
     </div>
   </div>
 </section>
@@ -659,10 +659,22 @@ img{max-width:100%;display:block}
         <div class="field"><label for="cmaint">Maintenance</label>
           <select id="cmaint" name="maintenance">
             <option value="">— À définir —</option>
-            <option value="Suivi mensuel (40 €/mois)">Suivi mensuel · 40 €/mois</option>
+            <option value="Suivi mensuel (39 €/mois)">Suivi mensuel · 39 €/mois</option>
             <option value="Pack d'heures">Pack d'heures</option>
             <option value="On verra plus tard / besoin d'infos">On verra plus tard / besoin d'infos</option>
           </select>
+        </div>
+        <div class="field" id="pack-detail" style="display:none">
+          <label for="cpack">Nombre d'heures</label>
+          <select id="cpack" name="pack">
+            <option value="5">Pack 5 h — 175 € (35 €/h)</option>
+            <option value="10">Pack 10 h — 320 € (32 €/h)</option>
+            <option value="autre">Autre — je précise</option>
+          </select>
+          <div id="pack-custom" style="display:none;margin-top:10px">
+            <input id="chours" name="hours" type="number" min="1" max="500" inputmode="numeric" placeholder="Nombre d'heures (ex. 7)">
+            <div id="chours-price" style="font-family:var(--fm);font-size:12.5px;color:var(--d-dim);margin-top:8px"></div>
+          </div>
         </div>
         <div class="field"><label for="cm">Votre projet</label><textarea id="cm" name="message" required minlength="10" maxlength="5000"></textarea></div>
         <input type="hidden" name="ts" value="<?= htmlspecialchars((string) $contactFormTs, ENT_QUOTES) ?>">
@@ -720,6 +732,34 @@ document.querySelectorAll('.faq__q').forEach(function(q){
    .catch(function(){s.className='form__status err';s.textContent='Une erreur est survenue. Merci de réessayer.';})
    .finally(function(){b.disabled=false;});
  });})();
+// Maintenance : détail "pack d'heures" + aperçu du prix (tarifs dégressifs)
+(function(){
+ var maint=document.getElementById('cmaint'),detail=document.getElementById('pack-detail'),
+     pack=document.getElementById('cpack'),custom=document.getElementById('pack-custom'),
+     hours=document.getElementById('chours'),price=document.getElementById('chours-price');
+ if(!maint||!detail)return;
+ function rate(h){return h<5?39:(h<=9?35:32);}
+ function syncDetail(){detail.style.display=(maint.value==="Pack d'heures")?'block':'none';}
+ function updatePrice(){
+  if(pack.value!=='autre'){price.textContent='';return;}
+  var h=parseInt(hours.value,10);
+  if(!h||h<1){price.textContent="Indiquez un nombre d'heures.";return;}
+  var r=rate(h);price.textContent='≈ '+(h*r)+' € ('+r+' €/h)';
+ }
+ function syncCustom(){custom.style.display=(pack.value==='autre')?'block':'none';updatePrice();}
+ maint.addEventListener('change',syncDetail);
+ pack.addEventListener('change',syncCustom);
+ hours.addEventListener('input',updatePrice);
+ syncDetail();syncCustom();
+ document.querySelectorAll('[data-maint]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+   var isHeures=btn.getAttribute('data-maint')==='heures';
+   maint.value=isHeures?"Pack d'heures":"Suivi mensuel (39 €/mois)";
+   syncDetail();
+   if(isHeures){setTimeout(function(){pack.focus();},450);}
+  });
+ });
+})();
 // Reveal
 (function(){if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.12});

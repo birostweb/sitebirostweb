@@ -247,9 +247,26 @@ $message = trim($_POST["message"] ?? '');
 
 // Champs à choix fermé : on n'accepte que des valeurs de la liste blanche.
 $offreAllowed = ['Offre 1 — Site vitrine', 'Offre 2 — Boutique en ligne', 'Offre 3 — Application web', 'Devis sur-mesure'];
-$maintAllowed = ['Suivi mensuel (40 €/mois)', "Pack d'heures", "On verra plus tard / besoin d'infos"];
+$maintAllowed = ['Suivi mensuel (39 €/mois)', "Pack d'heures", "On verra plus tard / besoin d'infos"];
 $offre       = in_array($_POST["offre"] ?? '', $offreAllowed, true) ? $_POST["offre"] : '';
 $maintenance = in_array($_POST["maintenance"] ?? '', $maintAllowed, true) ? $_POST["maintenance"] : '';
+
+// Détail du pack d'heures — prix recalculé côté serveur (tarifs dégressifs : <5h = 39, 5-9h = 35, 10h+ = 32).
+if ($maintenance === "Pack d'heures") {
+    $hourRate = function (int $h): int { return $h < 5 ? 39 : ($h <= 9 ? 35 : 32); };
+    $pack = $_POST['pack'] ?? '';
+    if ($pack === '5') {
+        $maintenance = 'Pack 5 h (175 €)';
+    } elseif ($pack === '10') {
+        $maintenance = 'Pack 10 h (320 €)';
+    } elseif ($pack === 'autre') {
+        $h = (int) ($_POST['hours'] ?? 0);
+        if ($h >= 1 && $h <= 500) {
+            $r = $hourRate($h);
+            $maintenance = $h . ' h (≈ ' . ($h * $r) . ' €, ' . $r . ' €/h)';
+        }
+    }
+}
 
 if (
     $name === '' || mb_strlen($name) > 100
