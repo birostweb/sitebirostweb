@@ -424,6 +424,25 @@ img{max-width:100%;display:block}
 
       <article class="project reveal">
         <div class="shot">
+          <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">generique.theo-birost.fr</span></div>
+          <div class="shot__img"><img src="/img/generique.webp" alt="Générique — index de cinéma" width="1400" height="875" loading="lazy" decoding="async"></div>
+        </div>
+        <div>
+          <span class="project__k">Application web · Full-stack</span>
+          <h3>Générique</h3>
+          <span class="project__ctx">Index de cinéma · Recherche &amp; fiches détaillées</span>
+          <p>Une application pour explorer un index de films, d'interprètes et de réalisateurs : recherche instantanée, fiches détaillées et données à jour. Une base full-stack complète, du front jusqu'à la logique serveur.</p>
+          <p class="project__role"><b>Mon rôle</b>Conception et développement complet, du front à l'API.</p>
+          <div class="tags"><span class="tag">Vue 3</span><span class="tag">Vite</span><span class="tag">JavaScript</span><span class="tag">API</span></div>
+          <div class="project__links">
+            <a class="plink" href="https://generique.theo-birost.fr" target="_blank" rel="noopener">Voir le projet
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="shot">
           <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">clicker — jeu</span></div>
           <div class="shot__img"><img src="/img/clicker_img.webp" alt="Jeu du clicker" width="1400" height="741" loading="lazy" decoding="async"></div>
         </div>
