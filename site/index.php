@@ -43,7 +43,7 @@ $contactFormToken = hash_hmac('sha256', (string) $contactFormTs, $_ENV['CONTACT_
 <link rel="preload" href="/fonts/ibmplexsanscondensed-700-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="manifest" href="/site.webmanifest">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Birostweb — Théo Birost","description":"Développeur web full-stack indépendant : sites vitrines, boutiques et applications sur-mesure, du design au déploiement.","url":"https://birostweb.fr","email":"contact@theo-birost.fr","areaServed":"FR","founder":{"@type":"Person","name":"Théo Birost"},"sameAs":["https://github.com/birostweb","https://www.linkedin.com/company/birostweb","https://www.instagram.com/birost.web"],"priceRange":"€€"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Birostweb — Théo Birost","description":"Développeur web full-stack indépendant : sites vitrines, boutiques et applications sur-mesure, du design au déploiement.","url":"https://birostweb.fr","email":"contact@theo-birost.fr","areaServed":"FR","founder":{"@type":"Person","name":"Théo Birost"},"sameAs":["https://github.com/birostweb","https://www.linkedin.com/in/th%C3%A9o-birost-09b286429/","https://www.instagram.com/birost.web"],"priceRange":"€€"}</script>
 <style>
 /* ================= TOKENS ================= */
 :root{
@@ -665,7 +665,7 @@ img{max-width:100%;display:block}
         <div class="manifest">
           <div class="mrow"><span class="mk">Mail</span><span class="mv"><a href="mailto:contact@theo-birost.fr">contact@theo-birost.fr</a></span></div>
           <div class="mrow"><span class="mk">GitHub</span><span class="mv"><a href="https://github.com/birostweb" target="_blank" rel="noopener">github.com/birostweb</a></span></div>
-          <div class="mrow"><span class="mk">LinkedIn</span><span class="mv"><a href="https://www.linkedin.com/company/birostweb" target="_blank" rel="noopener">linkedin.com/company/birostweb</a></span></div>
+          <div class="mrow"><span class="mk">LinkedIn</span><span class="mv"><a href="https://www.linkedin.com/in/th%C3%A9o-birost-09b286429/" target="_blank" rel="noopener">linkedin.com/in/théo-birost</a></span></div>
           <!-- Remplace le handle Instagram ci-dessous par ton vrai compte une fois créé -->
           <div class="mrow"><span class="mk">Instagram</span><span class="mv"><a href="https://www.instagram.com/birost.web" target="_blank" rel="noopener">@birost.web</a></span></div>
           <div class="mrow"><span class="mk">Zone</span><span class="mv">France entière · Full remote</span></div>
