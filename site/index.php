@@ -8,7 +8,8 @@ try {
     // Pas de .env : normal en prod, les variables viennent de l'environnement Dokploy.
 }
 $contactFormTs    = time();
-$contactFormToken = hash_hmac('sha256', (string) $contactFormTs, $_ENV['CONTACT_FORM_SECRET'] ?? '');
+$contactSecret    = $_ENV['CONTACT_FORM_SECRET'] ?? $_SERVER['CONTACT_FORM_SECRET'] ?? getenv('CONTACT_FORM_SECRET') ?: '';
+$contactFormToken = hash_hmac('sha256', (string) $contactFormTs, $contactSecret);
 ?>
 <!DOCTYPE html>
 <html lang="fr">

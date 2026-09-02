@@ -337,7 +337,7 @@ if (!empty($_POST['website'])) {
 // --- Jeton signé HMAC + délai minimum ---
 $ts    = $_POST['ts'] ?? '';
 $token = $_POST['token'] ?? '';
-$expectedToken = hash_hmac('sha256', (string) $ts, $_ENV['CONTACT_FORM_SECRET'] ?? '');
+$expectedToken = hash_hmac('sha256', (string) $ts, contact_env('CONTACT_FORM_SECRET') ?? '');
 
 if (!ctype_digit((string) $ts) || !hash_equals($expectedToken, (string) $token)) {
     http_response_code(400);
@@ -357,7 +357,7 @@ if ($elapsed < 3) {
 }
 
 // --- Altcha : captcha auto-hébergé (preuve de travail + signature serveur) ---
-if (!contact_altcha_check((string) ($_POST['altcha'] ?? ''), $_ENV['CONTACT_FORM_SECRET'] ?? '')) {
+if (!contact_altcha_check((string) ($_POST['altcha'] ?? ''), contact_env('CONTACT_FORM_SECRET') ?? '')) {
     contact_log('altcha_fail');
     http_response_code(400);
     echo "Vérification anti-robot échouée. Merci de recharger la page et réessayer.";
@@ -428,15 +428,15 @@ $mail = new PHPMailer(true);
 try {
     $mail->CharSet = 'UTF-8';
     $mail->isSMTP();
-    $mail->Host       = $_ENV['SMTP_HOST'];
+    $mail->Host       = contact_env('SMTP_HOST');
     $mail->SMTPAuth   = true;
-    $mail->Username   = $_ENV['SMTP_USERNAME'];
-    $mail->Password   = $_ENV['SMTP_PASSWORD'];
-    $mail->SMTPSecure = $_ENV['SMTP_SECURE'];
-    $mail->Port       = (int) $_ENV['SMTP_PORT'];
+    $mail->Username   = contact_env('SMTP_USERNAME');
+    $mail->Password   = contact_env('SMTP_PASSWORD');
+    $mail->SMTPSecure = contact_env('SMTP_SECURE');
+    $mail->Port       = (int) contact_env('SMTP_PORT');
 
     // OVH exige que le From soit le compte authentifié ; l'adresse du visiteur va en Reply-To.
-    $mail->setFrom($_ENV['SMTP_USERNAME'], 'Formulaire birostweb.fr');
+    $mail->setFrom(contact_env('SMTP_USERNAME'), 'Formulaire birostweb.fr');
     $mail->addAddress('contact@theo-birost.fr', 'Théo Birost');
     $mail->addReplyTo($email, $name);
     $mail->addCustomHeader('X-Mail-Source', 'birostweb.fr');
@@ -471,13 +471,13 @@ try {
         $ack = new PHPMailer(true);
         $ack->CharSet    = 'UTF-8';
         $ack->isSMTP();
-        $ack->Host       = $_ENV['SMTP_HOST'];
+        $ack->Host       = contact_env('SMTP_HOST');
         $ack->SMTPAuth   = true;
-        $ack->Username   = $_ENV['SMTP_USERNAME'];
-        $ack->Password   = $_ENV['SMTP_PASSWORD'];
-        $ack->SMTPSecure = $_ENV['SMTP_SECURE'];
-        $ack->Port       = (int) $_ENV['SMTP_PORT'];
-        $ack->setFrom($_ENV['SMTP_USERNAME'], 'Théo Birost — Birostweb');
+        $ack->Username   = contact_env('SMTP_USERNAME');
+        $ack->Password   = contact_env('SMTP_PASSWORD');
+        $ack->SMTPSecure = contact_env('SMTP_SECURE');
+        $ack->Port       = (int) contact_env('SMTP_PORT');
+        $ack->setFrom(contact_env('SMTP_USERNAME'), 'Théo Birost — Birostweb');
         $ack->addAddress($email, $name);
         $ack->addReplyTo('contact@theo-birost.fr', 'Théo Birost');
         $ack->isHTML(true);
