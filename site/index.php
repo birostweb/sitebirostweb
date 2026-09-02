@@ -347,12 +347,20 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
 .tabs{position:relative}
 .tabs>input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 .tabs__nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:clamp(28px,4vw,44px)}
-.tabs__nav label{font-family:var(--fm);font-size:13.5px;letter-spacing:.02em;padding:12px 20px;border:1.5px solid var(--line);border-radius:100px;cursor:pointer;color:var(--gray);background:var(--surface);transition:.15s;white-space:nowrap}
+.tabs__nav label{font-family:var(--fm);font-size:13.5px;letter-spacing:.02em;padding:12px 20px;border:1.5px solid var(--line);border-radius:8px;cursor:pointer;color:var(--gray);background:var(--surface);transition:.15s;white-space:nowrap}
 .tabs__nav label:hover{color:var(--ink);border-color:var(--ink)}
 .tabs__panel{display:none}
 #tab-crea:checked~.tabs__nav label[for="tab-crea"],#tab-heb:checked~.tabs__nav label[for="tab-heb"],#tab-maint:checked~.tabs__nav label[for="tab-maint"]{background:var(--accent);border-color:var(--accent);color:#fff}
 #tab-crea:checked~#panel-crea,#tab-heb:checked~#panel-heb,#tab-maint:checked~#panel-maint{display:block}
 .tabs__panel .reveal{opacity:1;transform:none}
+
+/* ===== Estimation (configurateur d'offre) ===== */
+.estimate{background:rgba(240,69,30,.10);border:1px solid var(--accent);border-radius:10px;padding:16px 18px;margin-bottom:4px}
+.estimate__t{font-family:var(--fm);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.estimate__row{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;color:var(--d-dim);padding:3px 0}
+.estimate__row b{color:var(--d-text);font-weight:600;text-align:right}
+.estimate__total{margin-top:10px;padding-top:10px;border-top:1px solid var(--d-line);font-family:var(--fd);font-weight:700;font-size:18px;color:var(--d-text)}
+.estimate__note{font-family:var(--fm);font-size:11px;color:var(--d-dim);margin-top:8px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -544,7 +552,7 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
         <p class="offer__promise">Un site propre et rapide pour présenter votre activité et donner confiance. Codé sur-mesure ou sur un outil que vous pourrez mettre à jour vous-même : on choisit ensemble ce qui vous convient le mieux.</p>
         <div class="offer__inc"><b>Inclus</b>Design, intégration responsive, référencement de base et mise en ligne. Le périmètre exact est détaillé dans le devis.</div>
         <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">999 €</div><div class="note">Version multilingue ou à gérer soi-même : sur devis</div></div>
-        <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
+        <a href="#contact" class="btn btn-ghost" data-step="offre" data-label="Site vitrine" data-oneoff="999" data-form="Offre 1 — Site vitrine" data-next="tab-heb">Choisir le site vitrine</a>
       </article>
 
       <article class="offer">
@@ -553,7 +561,7 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
         <p class="offer__promise">Une boutique claire et rapide, où vos clients trouvent et commandent sans se compliquer la vie. Sur une base e-commerce solide ou entièrement sur-mesure, selon vos besoins.</p>
         <div class="offer__inc"><b>Inclus</b>Catalogue, paiement sécurisé et parcours d'achat, avec un back-office simple à gérer. Le détail est calé dans le devis.</div>
         <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">1 899 €</div><div class="note">Version 100 % sur-mesure : sur devis</div></div>
-        <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
+        <a href="#contact" class="btn btn-ghost" data-step="offre" data-label="Boutique en ligne" data-oneoff="1899" data-form="Offre 2 — Boutique en ligne" data-next="tab-heb">Choisir la boutique</a>
       </article>
 
       <article class="offer">
@@ -562,7 +570,7 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
         <p class="offer__promise">Quand un simple site ne suffit plus : un outil construit autour de votre façon de travailler, pour vous faire gagner du temps au quotidien.</p>
         <div class="offer__inc"><b>Inclus</b>Cadrage du besoin, design, développement et mise en ligne. Le périmètre précis est défini ensemble dans le devis.</div>
         <div class="offer__price"><div class="lbl">À partir de</div><div class="amt">2 999 €</div><div class="note">Chiffré précisément selon le périmètre</div></div>
-        <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
+        <a href="#contact" class="btn btn-ghost" data-step="offre" data-label="Application web" data-oneoff="2999" data-form="Offre 3 — Application web" data-next="tab-heb">Choisir l'application</a>
       </article>
 
     </div>
@@ -590,49 +598,49 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
 
         <article class="plan">
           <div class="plan__name">Votre hébergement</div>
-          <div class="plan__price">Inclus</div>
+          <div class="plan__price">Gratuit</div>
           <div class="plan__for">Vous gardez la main</div>
           <ul class="plan__list">
             <li>Déployé sur votre VPS ou votre hébergeur</li>
             <li>Vous en êtes 100 % propriétaire</li>
             <li>Vous payez votre hébergeur directement (~5 à 15 €/mois)</li>
             <li>Aucun abonnement chez moi</li>
+            <li>Maintenance en option (39 €/mois)</li>
           </ul>
-          <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
+          <a href="#contact" class="btn btn-ghost" data-step="heb" data-label="Sur mon propre hébergement" data-mo="0" data-form="Sur mon propre serveur / hébergeur" data-next="tab-maint">Choisir cette option</a>
         </article>
 
         <article class="plan plan--feat">
           <span class="plan__badge">Le plus simple</span>
-          <div class="plan__name">Géré · VPS-1</div>
-          <div class="plan__price">19 €<span> / mois</span></div>
-          <div class="plan__for">Idéal site vitrine</div>
+          <div class="plan__name">Essentiel · VPS-1</div>
+          <div class="plan__price">45 €<span> / mois</span></div>
+          <div class="plan__for">Site vitrine · tout compris</div>
           <ul class="plan__list">
             <li>Serveur 2 vCœurs · 4 Go RAM · 40 Go SSD</li>
-            <li>Mise en ligne &amp; configuration</li>
-            <li>Sauvegardes quotidiennes</li>
-            <li>Sécurité &amp; supervision (disponibilité)</li>
-            <li>HTTPS inclus, rien à gérer</li>
-            <li>Maintenance mensuelle obligatoire (dès 39 €/mois)</li>
+            <li>Mise en ligne, configuration &amp; HTTPS</li>
+            <li>Mises à jour &amp; sécurité</li>
+            <li>Sauvegardes quotidiennes &amp; supervision</li>
+            <li>Support par email</li>
+            <li>Tout compris — rien d'autre à payer</li>
           </ul>
-          <a href="#contact" class="btn btn-ghost">Choisir cette offre</a>
+          <a href="#contact" class="btn btn-ghost" data-step="heb" data-label="Essentiel · VPS-1 (tout compris)" data-mo="45" data-form="Essentiel · VPS-1 (45 €/mois)" data-included="1">Choisir Essentiel</a>
         </article>
 
         <article class="plan">
-          <div class="plan__name">Géré · VPS-2</div>
-          <div class="plan__price">35 €<span> / mois</span></div>
-          <div class="plan__for">Boutique &amp; applications</div>
+          <div class="plan__name">Pro · VPS-2</div>
+          <div class="plan__price">69 €<span> / mois</span></div>
+          <div class="plan__for">Boutique &amp; applications · tout compris</div>
           <ul class="plan__list">
             <li>Serveur 4 vCœurs · 8 Go RAM · 75 Go SSD</li>
-            <li>Tout ce qui est inclus dans VPS-1</li>
+            <li>Tout ce qui est inclus dans Essentiel</li>
             <li>Ressources pour un trafic plus élevé</li>
             <li>Support prioritaire</li>
-            <li>Maintenance mensuelle obligatoire (dès 39 €/mois)</li>
           </ul>
-          <a href="#contact" class="btn btn-ghost">Choisir cette offre</a>
+          <a href="#contact" class="btn btn-ghost" data-step="heb" data-label="Pro · VPS-2 (tout compris)" data-mo="69" data-form="Pro · VPS-2 (69 €/mois)" data-included="1">Choisir Pro</a>
         </article>
 
       </div>
-      <p class="maint__note">Les formules <b>gérées</b> nécessitent une <b>maintenance mensuelle</b> (dès 39 €/mois — onglet Maintenance) : c'est elle qui garde votre site à jour et sécurisé. Sur votre propre hébergement, elle reste optionnelle.</p>
+      <p class="maint__note"><span>Les offres <b>Essentiel</b> et <b>Pro</b> sont <b>tout compris</b> : hébergement, mises à jour, sécurité, sauvegardes et support, sans surcoût. Si vous préférez héberger vous-même, la maintenance reste en option (onglet Maintenance).</span></p>
     </div>
 
       <!-- Onglet Maintenance -->
@@ -655,7 +663,7 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
             <li>Petites corrections incluses</li>
             <li>Support par email</li>
           </ul>
-          <a href="#contact" class="btn btn-ghost" data-maint="suivi">Souscrire au suivi</a>
+          <a href="#contact" class="btn btn-ghost" data-maint="suivi" data-step="maint" data-label="Suivi mensuel (39 €/mois)" data-mo="39" data-form="Suivi mensuel (39 €/mois)">Choisir le suivi mensuel</a>
         </article>
 
         <article class="plan">
@@ -673,7 +681,7 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
             <div class="plan__pack"><span class="a">Pack 5 h</span><span class="b">175 €<small>35 €/h</small></span></div>
             <div class="plan__pack"><span class="a">Pack 10 h</span><span class="b">320 €<small>32 €/h</small></span></div>
           </div>
-          <a href="#contact" class="btn btn-ghost" data-maint="heures">Commander des heures</a>
+          <a href="#contact" class="btn btn-ghost" data-maint="heures" data-step="maint" data-label="Pack d'heures" data-mo="0" data-form="Pack d'heures">Choisir le pack d'heures</a>
         </article>
 
       </div>
@@ -759,6 +767,14 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
         </div>
       </div>
       <form class="form" id="cform" method="post" action="send_mail.php">
+        <div class="estimate" id="estimate" hidden>
+          <div class="estimate__t">Votre sélection</div>
+          <div class="estimate__row"><span>Projet</span><b id="est-offre">—</b></div>
+          <div class="estimate__row"><span>Hébergement</span><b id="est-heb">—</b></div>
+          <div class="estimate__row"><span>Maintenance</span><b id="est-maint">—</b></div>
+          <div class="estimate__total"><span id="est-oneoff">—</span> <span id="est-mo"></span></div>
+          <div class="estimate__note">Estimation indicative — le prix exact dépend du périmètre et vous est confirmé dans le devis.</div>
+        </div>
         <div class="field"><label for="cn">Nom</label><input id="cn" name="name" type="text" autocomplete="name" required maxlength="100"></div>
         <div class="field"><label for="ce">Email</label><input id="ce" name="email" type="email" autocomplete="email" required maxlength="254"></div>
         <div class="field"><label for="coffer">Offre qui vous intéresse</label>
@@ -794,8 +810,8 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
           <select id="cheb" name="hebergement">
             <option value="">— À définir —</option>
             <option value="Sur mon propre serveur / hébergeur">Sur mon propre serveur / hébergeur</option>
-            <option value="Hébergement géré · VPS-1 (19 €/mois)">Hébergement géré · VPS-1 — 19 €/mois</option>
-            <option value="Hébergement géré · VPS-2 (35 €/mois)">Hébergement géré · VPS-2 — 35 €/mois</option>
+            <option value="Essentiel · VPS-1 (45 €/mois)">Essentiel · VPS-1 — 45 €/mois (tout compris)</option>
+            <option value="Pro · VPS-2 (69 €/mois)">Pro · VPS-2 — 69 €/mois (tout compris)</option>
           </select>
         </div>
         <div class="field"><label for="cm">Votre projet</label><textarea id="cm" name="message" required minlength="10" maxlength="5000"></textarea></div>
@@ -880,6 +896,36 @@ document.querySelectorAll('.faq__q').forEach(function(q){
    maint.value=isHeures?"Pack d'heures":"Suivi mensuel (39 €/mois)";
    syncDetail();
    if(isHeures){setTimeout(function(){pack.focus();},450);}
+  });
+ });
+})();
+// Configurateur d'offre : parcours guidé (onglet -> onglet) + estimation + pré-remplissage du formulaire
+(function(){
+ var box=document.getElementById('estimate'); if(!box) return;
+ var el={offre:document.getElementById('est-offre'),heb:document.getElementById('est-heb'),maint:document.getElementById('est-maint'),oneoff:document.getElementById('est-oneoff'),mo:document.getElementById('est-mo')};
+ var state={};
+ function setSelect(id,val){var s=document.getElementById(id); if(!s||val==null) return; var ok=false; for(var i=0;i<s.options.length;i++){if(s.options[i].value===val){ok=true;break;}} if(!ok){s.add(new Option(val,val));} s.value=val;}
+ function refresh(){
+  box.hidden=false;
+  el.offre.textContent=state.offre?state.offre.label:'—';
+  el.heb.textContent=state.heb?state.heb.label:'—';
+  el.maint.textContent=state.maint?state.maint.label:'—';
+  var oneoff=state.offre?state.offre.oneoff:0;
+  el.oneoff.textContent=(oneoff>0)?('À partir de '+oneoff.toLocaleString('fr-FR')+' €'):'Projet sur devis';
+  var mo=(state.heb?state.heb.mo:0)+(state.maint?state.maint.mo:0);
+  el.mo.textContent=(mo>0)?('+ '+mo+' €/mois'):'';
+ }
+ function toTab(id){var r=document.getElementById(id); if(r){r.checked=true; var n=document.querySelector('.tabs__nav'); if(n)n.scrollIntoView({behavior:'smooth',block:'start'});}}
+ document.querySelectorAll('[data-step]').forEach(function(btn){
+  btn.addEventListener('click',function(e){
+   e.preventDefault();
+   var d=btn.dataset;
+   if(d.step==='offre'){state.offre={label:d.label,oneoff:parseInt(d.oneoff||'0',10)};setSelect('coffer',d.form);}
+   else if(d.step==='heb'){state.heb={label:d.label,mo:parseInt(d.mo||'0',10)};setSelect('cheb',d.form);
+    if(d.included){state.maint={label:"Incluse dans l'offre",mo:0};setSelect('cmaint','');}}
+   else if(d.step==='maint'){state.maint={label:d.label,mo:parseInt(d.mo||'0',10)};setSelect('cmaint',d.form);}
+   refresh();
+   if(d.next){toTab(d.next);} else {var c=document.getElementById('contact'); if(c)c.scrollIntoView({behavior:'smooth'});}
   });
  });
 })();
