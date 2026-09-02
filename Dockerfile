@@ -13,7 +13,8 @@ LABEL org.opencontainers.image.title="birostweb" \
 RUN a2enmod rewrite headers expires
 
 # Config PHP de production (display_errors off, expose_php off, etc.)
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+    && echo "variables_order = EGPCS" > "$PHP_INI_DIR/conf.d/zz-app.ini"
 
 # ServerName pour éviter les warnings
 RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \

@@ -43,6 +43,7 @@ $contactFormToken = hash_hmac('sha256', (string) $contactFormTs, $_ENV['CONTACT_
 <link rel="preload" href="/fonts/ibmplexsanscondensed-700-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="manifest" href="/site.webmanifest">
+<script async type="module" src="/js/altcha.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Birostweb — Théo Birost","description":"Développeur web full-stack indépendant : sites vitrines, boutiques et applications sur-mesure, du design au déploiement.","url":"https://birostweb.fr","email":"contact@theo-birost.fr","areaServed":"FR","founder":{"@type":"Person","name":"Théo Birost"},"sameAs":["https://github.com/birostweb","https://www.linkedin.com/in/th%C3%A9o-birost-09b286429/","https://www.instagram.com/birost.web"],"priceRange":"€€"}</script>
 <style>
 /* ================= TOKENS ================= */
@@ -334,6 +335,24 @@ img{max-width:100%;display:block}
   .sticky-cta{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:70;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(229,226,214,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line)}
   .sticky-cta .btn{flex:1;justify-content:center}
 }
+
+/* ===== Captcha Altcha (thème sombre du formulaire) ===== */
+altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border-radius:8px;--altcha-border-width:1px;--altcha-color-base:rgba(255,255,255,.04);--altcha-color-border:var(--d-line);--altcha-color-border-focus:var(--accent);--altcha-color-text:var(--d-text);--altcha-color-footer-bg:transparent}
+
+/* ===== Hébergement (3 cartes) ===== */
+.hosting{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:920px){.hosting{grid-template-columns:1fr}}
+
+/* ===== Onglets des offres (CSS pur) ===== */
+.tabs{position:relative}
+.tabs>input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.tabs__nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:clamp(28px,4vw,44px)}
+.tabs__nav label{font-family:var(--fm);font-size:13.5px;letter-spacing:.02em;padding:12px 20px;border:1.5px solid var(--line);border-radius:100px;cursor:pointer;color:var(--gray);background:var(--surface);transition:.15s;white-space:nowrap}
+.tabs__nav label:hover{color:var(--ink);border-color:var(--ink)}
+.tabs__panel{display:none}
+#tab-crea:checked~.tabs__nav label[for="tab-crea"],#tab-heb:checked~.tabs__nav label[for="tab-heb"],#tab-maint:checked~.tabs__nav label[for="tab-maint"]{background:var(--accent);border-color:var(--accent);color:#fff}
+#tab-crea:checked~#panel-crea,#tab-heb:checked~#panel-heb,#tab-maint:checked~#panel-maint{display:block}
+.tabs__panel .reveal{opacity:1;transform:none}
 </style>
 </head>
 <body>
@@ -504,7 +523,19 @@ img{max-width:100%;display:block}
       <h2 class="h2 reveal">Des offres claires, un prix de départ affiché.</h2>
       <p class="lead reveal">Ce sont des prix de départ, juste pour vous donner un ordre d'idée. Le périmètre, la techno et le contenu se décident ensemble, et vous avez un devis précis avant de vous engager.</p>
     </div>
-    <div class="offers reveal">
+
+    <div class="tabs">
+      <input type="radio" name="offtab" id="tab-crea" checked>
+      <input type="radio" name="offtab" id="tab-heb">
+      <input type="radio" name="offtab" id="tab-maint">
+      <div class="tabs__nav">
+        <label for="tab-crea">Création de site</label>
+        <label for="tab-heb">Hébergement</label>
+        <label for="tab-maint">Maintenance</label>
+      </div>
+
+      <div class="tabs__panel" id="panel-crea">
+    <div class="offers">
 
       <article class="offer offer--feat">
         <span class="offer__badge">Le plus demandé</span>
@@ -547,11 +578,66 @@ img{max-width:100%;display:block}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
+      </div><!-- /panel Création -->
 
-    <!-- Maintenance mensuelle -->
-    <div class="maint reveal">
+      <!-- Onglet Hébergement -->
+      <div class="tabs__panel" id="panel-heb">
       <div class="maint__head">
-        <span class="eyebrow">Après la mise en ligne</span>
+        <h3>Où vit votre site&nbsp;?</h3>
+        <p>Deux possibilités : vous gardez la main sur votre hébergement, ou je m'occupe de tout, serveur compris.</p>
+      </div>
+      <div class="hosting">
+
+        <article class="plan">
+          <div class="plan__name">Votre hébergement</div>
+          <div class="plan__price">Inclus</div>
+          <div class="plan__for">Vous gardez la main</div>
+          <ul class="plan__list">
+            <li>Déployé sur votre VPS ou votre hébergeur</li>
+            <li>Vous en êtes 100 % propriétaire</li>
+            <li>Vous payez votre hébergeur directement (~5 à 15 €/mois)</li>
+            <li>Aucun abonnement chez moi</li>
+          </ul>
+          <a href="#contact" class="btn btn-ghost">Discuter du projet</a>
+        </article>
+
+        <article class="plan plan--feat">
+          <span class="plan__badge">Le plus simple</span>
+          <div class="plan__name">Géré · VPS-1</div>
+          <div class="plan__price">19 €<span> / mois</span></div>
+          <div class="plan__for">Idéal site vitrine</div>
+          <ul class="plan__list">
+            <li>Serveur 2 vCœurs · 4 Go RAM · 40 Go SSD</li>
+            <li>Mise en ligne &amp; configuration</li>
+            <li>Sauvegardes quotidiennes</li>
+            <li>Sécurité &amp; supervision (disponibilité)</li>
+            <li>HTTPS inclus, rien à gérer</li>
+            <li>Maintenance mensuelle obligatoire (dès 39 €/mois)</li>
+          </ul>
+          <a href="#contact" class="btn btn-ghost">Choisir cette offre</a>
+        </article>
+
+        <article class="plan">
+          <div class="plan__name">Géré · VPS-2</div>
+          <div class="plan__price">35 €<span> / mois</span></div>
+          <div class="plan__for">Boutique &amp; applications</div>
+          <ul class="plan__list">
+            <li>Serveur 4 vCœurs · 8 Go RAM · 75 Go SSD</li>
+            <li>Tout ce qui est inclus dans VPS-1</li>
+            <li>Ressources pour un trafic plus élevé</li>
+            <li>Support prioritaire</li>
+            <li>Maintenance mensuelle obligatoire (dès 39 €/mois)</li>
+          </ul>
+          <a href="#contact" class="btn btn-ghost">Choisir cette offre</a>
+        </article>
+
+      </div>
+      <p class="maint__note">Les formules <b>gérées</b> nécessitent une <b>maintenance mensuelle</b> (dès 39 €/mois — onglet Maintenance) : c'est elle qui garde votre site à jour et sécurisé. Sur votre propre hébergement, elle reste optionnelle.</p>
+    </div>
+
+      <!-- Onglet Maintenance -->
+      <div class="tabs__panel" id="panel-maint">
+      <div class="maint__head">
         <h3>Maintenance mensuelle, sans y penser.</h3>
         <p>Un site vit : il faut le garder à jour, sauvegardé et sécurisé. Prenez le niveau de suivi qui vous va, et changez ou arrêtez quand vous voulez.</p>
       </div>
@@ -592,6 +678,7 @@ img{max-width:100%;display:block}
 
       </div>
       <p class="maint__note">Sans engagement — le suivi mensuel s'arrête quand vous voulez, et les heures d'un pack restent valables 24 mois.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -703,6 +790,14 @@ img{max-width:100%;display:block}
             <div id="chours-price" style="font-family:var(--fm);font-size:12.5px;color:var(--d-dim);margin-top:8px"></div>
           </div>
         </div>
+        <div class="field"><label for="cheb">Hébergement</label>
+          <select id="cheb" name="hebergement">
+            <option value="">— À définir —</option>
+            <option value="Sur mon propre serveur / hébergeur">Sur mon propre serveur / hébergeur</option>
+            <option value="Hébergement géré · VPS-1 (19 €/mois)">Hébergement géré · VPS-1 — 19 €/mois</option>
+            <option value="Hébergement géré · VPS-2 (35 €/mois)">Hébergement géré · VPS-2 — 35 €/mois</option>
+          </select>
+        </div>
         <div class="field"><label for="cm">Votre projet</label><textarea id="cm" name="message" required minlength="10" maxlength="5000"></textarea></div>
         <input type="hidden" name="ts" value="<?= htmlspecialchars((string) $contactFormTs, ENT_QUOTES) ?>">
         <input type="hidden" name="token" value="<?= htmlspecialchars($contactFormToken, ENT_QUOTES) ?>">
@@ -710,6 +805,7 @@ img{max-width:100%;display:block}
           <label for="website">Laisser ce champ vide</label>
           <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
         </div>
+        <altcha-widget challengeurl="/altcha.php" auto="onload"></altcha-widget>
         <div class="form__status" id="cstatus" role="status" aria-live="polite"></div>
         <p style="font-family:var(--fm);font-size:11.5px;color:var(--d-dim);line-height:1.5;margin-top:-4px">En envoyant ce formulaire, vous acceptez d'être recontacté au sujet de votre demande. Voir la <a href="/mentions-legales.html" style="color:var(--accent)">politique de confidentialité</a>.</p>
         <button type="submit" class="btn btn-accent btn-lg" style="justify-content:center">Envoyer ma demande

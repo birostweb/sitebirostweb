@@ -56,13 +56,14 @@ function contact_rate_limited(string $ip, int $maxRequests = 5, int $windowSecon
 }
 
 /** Corps HTML de l'email de notification reçu par le propriétaire du site. */
-function contact_render_email_html(string $name, string $email, string $message, string $offre, string $maintenance): string
+function contact_render_email_html(string $name, string $email, string $message, string $offre, string $maintenance, string $hebergement = ''): string
 {
     $safeName    = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
     $safeEmail   = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
     $safeMessage = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
     $safeOffre   = htmlspecialchars($offre !== '' ? $offre : 'Non précisée', ENT_QUOTES, 'UTF-8');
     $safeMaint   = htmlspecialchars($maintenance !== '' ? $maintenance : 'Non précisée', ENT_QUOTES, 'UTF-8');
+    $safeHeberg  = htmlspecialchars($hebergement !== '' ? $hebergement : 'Non précisé', ENT_QUOTES, 'UTF-8');
     $date        = (new DateTime('now', new DateTimeZone('Europe/Paris')))->format('d/m/Y à H:i');
 
     return <<<HTML
@@ -98,6 +99,10 @@ function contact_render_email_html(string $name, string $email, string $message,
             <tr>
               <td style="padding:10px 0;border-bottom:1px solid #E9E5DB;color:#F0451E;font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;vertical-align:top;">Maintenance</td>
               <td style="padding:10px 0;border-bottom:1px solid #E9E5DB;color:#231F20;font-size:15px;">{$safeMaint}</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #E9E5DB;color:#F0451E;font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;vertical-align:top;">Hébergement</td>
+              <td style="padding:10px 0;border-bottom:1px solid #E9E5DB;color:#231F20;font-size:15px;">{$safeHeberg}</td>
             </tr>
           </table>
           <div style="color:#F0451E;font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-bottom:10px;">Message</div>
@@ -198,14 +203,124 @@ function contact_spam_assessment(string $name, string $email, string $message): 
     ];
 }
 
+/** Lecture robuste d'une variable d'environnement (quel que soit variables_order). */
+function contact_env(string $key): ?string
+{
+    $v = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
+    return ($v === false || $v === null || $v === '') ? null : (string) $v;
+}
+
+/** Journalise un évènement du formulaire : IP réelle, User-Agent, endpoint, heure. */
+function contact_log(string $event, array $extra = []): void
+{
+    $entry = [
+        'ts'       => date('c'),
+        'event'    => $event,
+        'ip'       => contact_client_ip(),
+        'ua'       => substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? '-'), 0, 200),
+        'endpoint' => (string) ($_SERVER['REQUEST_URI'] ?? '-'),
+    ] + $extra;
+    $dir = contact_env('CONTACT_LOG_DIR') ?? sys_get_temp_dir();
+    @file_put_contents(
+        rtrim($dir, '/') . '/contact_form.log',
+        json_encode($entry, JSON_UNESCAPED_UNICODE) . "\n",
+        FILE_APPEND | LOCK_EX
+    );
+}
+
+/** Plafond global d'envois (toutes IP) sur 24 h glissantes. true si atteint. */
+function contact_global_cap_reached(int $max): bool
+{
+    if ($max <= 0) {
+        return false;
+    }
+    $file = sys_get_temp_dir() . '/contact_form_global.json';
+    $h = fopen($file, 'c+');
+    if (!$h) {
+        return false;
+    }
+    flock($h, LOCK_EX);
+    $times = json_decode(stream_get_contents($h) ?: '[]', true);
+    if (!is_array($times)) {
+        $times = [];
+    }
+    $now = time();
+    $times = array_values(array_filter($times, static fn ($t) => $t > $now - 86400));
+    $reached = count($times) >= $max;
+    if (!$reached) {
+        $times[] = $now;
+        ftruncate($h, 0);
+        rewind($h);
+        fwrite($h, json_encode($times));
+        fflush($h);
+    }
+    flock($h, LOCK_UN);
+    fclose($h);
+    return $reached;
+}
+
+/** Vérifie le payload Altcha : solution PoW + signature serveur + anti-rejeu. */
+function contact_altcha_check(string $payload, string $secret): bool
+{
+    if ($payload === '' || $secret === '') {
+        return false;
+    }
+    $data = json_decode(base64_decode($payload, true) ?: '', true);
+    if (!is_array($data)) {
+        return false;
+    }
+    $algorithm = $data['algorithm'] ?? '';
+    $challenge = (string) ($data['challenge'] ?? '');
+    $number    = $data['number'] ?? null;
+    $salt      = (string) ($data['salt'] ?? '');
+    $signature = (string) ($data['signature'] ?? '');
+
+    if ($algorithm !== 'SHA-256' || $challenge === '' || $salt === '' || $signature === '' || !is_numeric($number)) {
+        return false;
+    }
+    // Expiration (paramètre ?expires= dans le sel)
+    if (preg_match('/[?&]expires=(\d+)/', $salt, $m) && (int) $m[1] < time()) {
+        return false;
+    }
+    // La solution doit reconstituer le challenge…
+    if (!hash_equals(hash('sha256', $salt . $number), $challenge)) {
+        return false;
+    }
+    // …et le challenge doit bien avoir été signé par nous.
+    if (!hash_equals(hash_hmac('sha256', $challenge, $secret), $signature)) {
+        return false;
+    }
+    // Anti-rejeu : une même signature ne peut servir qu'une fois.
+    $dir = sys_get_temp_dir() . '/altcha_used';
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0700, true);
+    }
+    $file = $dir . '/' . hash('sha256', $signature) . '.used';
+    if (is_file($file) && filemtime($file) > time() - 3600) {
+        return false;
+    }
+    @touch($file);
+    return true;
+}
+
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(403);
     echo "Un problème est survenu, veuillez réessayer.";
     exit;
 }
 
+// --- Kill-switch : couper le formulaire sans redéploiement (ex. attaque en cours) ---
+$disabled = strtolower((string) (contact_env('CONTACT_FORM_DISABLED') ?? ''));
+if (in_array($disabled, ['1', 'true', 'yes', 'on'], true)) {
+    contact_log('killswitch');
+    http_response_code(503);
+    echo "Le formulaire est momentanément indisponible. Merci d'écrire directement à contact@theo-birost.fr.";
+    exit;
+}
+
 // --- Rate limit par IP ---
 if (contact_rate_limited(contact_client_ip())) {
+    contact_log('rate_limited');
     http_response_code(429);
     echo "Trop de tentatives. Merci de réessayer plus tard.";
     exit;
@@ -213,6 +328,7 @@ if (contact_rate_limited(contact_client_ip())) {
 
 // --- Honeypot : on répond OK sans rien envoyer ---
 if (!empty($_POST['website'])) {
+    contact_log('honeypot');
     http_response_code(200);
     echo "Merci ! Votre demande a bien été envoyée.";
     exit;
@@ -240,6 +356,14 @@ if ($elapsed < 3) {
     exit;
 }
 
+// --- Altcha : captcha auto-hébergé (preuve de travail + signature serveur) ---
+if (!contact_altcha_check((string) ($_POST['altcha'] ?? ''), $_ENV['CONTACT_FORM_SECRET'] ?? '')) {
+    contact_log('altcha_fail');
+    http_response_code(400);
+    echo "Vérification anti-robot échouée. Merci de recharger la page et réessayer.";
+    exit;
+}
+
 // --- Validation des champs ---
 $name    = str_replace(["\r", "\n"], '', strip_tags(trim($_POST["name"] ?? '')));
 $email   = filter_var(trim($_POST["email"] ?? ''), FILTER_SANITIZE_EMAIL);
@@ -248,8 +372,10 @@ $message = trim($_POST["message"] ?? '');
 // Champs à choix fermé : on n'accepte que des valeurs de la liste blanche.
 $offreAllowed = ['Offre 1 — Site vitrine', 'Offre 2 — Boutique en ligne', 'Offre 3 — Application web', 'Devis sur-mesure'];
 $maintAllowed = ['Suivi mensuel (39 €/mois)', "Pack d'heures", "On verra plus tard / besoin d'infos"];
+$hebergAllowed = ['Sur mon propre serveur / hébergeur', 'Hébergement géré · VPS-1 (19 €/mois)', 'Hébergement géré · VPS-2 (35 €/mois)'];
 $offre       = in_array($_POST["offre"] ?? '', $offreAllowed, true) ? $_POST["offre"] : '';
 $maintenance = in_array($_POST["maintenance"] ?? '', $maintAllowed, true) ? $_POST["maintenance"] : '';
+$hebergement = in_array($_POST["hebergement"] ?? '', $hebergAllowed, true) ? $_POST["hebergement"] : '';
 
 // Détail du pack d'heures — prix recalculé côté serveur (tarifs dégressifs : <5h = 39, 5-9h = 35, 10h+ = 32).
 if ($maintenance === "Pack d'heures") {
@@ -283,8 +409,18 @@ $spam = contact_spam_assessment($name, $email, $message);
 
 // Spam évident : on répond OK (comme le honeypot) sans rien envoyer.
 if ($spam['block']) {
+    contact_log('spam_block', ['score' => $spam['score'], 'reasons' => $spam['reasons']]);
     http_response_code(200);
     echo "Merci ! Votre demande a bien été envoyée. Je vous réponds sous 48h.";
+    exit;
+}
+
+// --- Plafond global d'e-mails / 24 h (garde-fou anti-abus, toutes IP confondues) ---
+$dailyCap = (int) (contact_env('CONTACT_FORM_DAILY_CAP') ?? '30');
+if (contact_global_cap_reached($dailyCap)) {
+    contact_log('cap_reached', ['cap' => $dailyCap]);
+    http_response_code(429);
+    echo "Le formulaire a atteint sa limite d'envois pour aujourd'hui. Merci d'écrire directement à contact@theo-birost.fr.";
     exit;
 }
 
@@ -318,15 +454,17 @@ try {
         $mail->Priority = 5;
     }
 
-    $mail->Body    = contact_render_email_html($name, $email, $message, $offre, $maintenance);
+    $mail->Body    = contact_render_email_html($name, $email, $message, $offre, $maintenance, $hebergement);
     $mail->AltBody = "Nouvelle demande depuis birostweb.fr\n\n"
         . "Nom : $name\n"
         . "Email : $email\n"
         . "Offre : " . ($offre !== '' ? $offre : 'Non précisée') . "\n"
-        . "Maintenance : " . ($maintenance !== '' ? $maintenance : 'Non précisée') . "\n\n"
+        . "Maintenance : " . ($maintenance !== '' ? $maintenance : 'Non précisée') . "\n"
+        . "Hébergement : " . ($hebergement !== '' ? $hebergement : 'Non précisé') . "\n\n"
         . "Message :\n$message";
 
     $mail->send();
+    contact_log('sent', ['offre' => $offre, 'maintenance' => $maintenance, 'spam_flag' => $spam['flag']]);
 
     // --- Accusé de réception automatique au visiteur (best-effort : n'échoue pas la demande) ---
     try {
@@ -373,6 +511,7 @@ HTML;
     http_response_code(200);
     echo "Merci ! Votre demande a bien été envoyée. Je vous réponds sous 48h.";
 } catch (Exception $e) {
+    contact_log('send_error', ['error' => substr($e->getMessage(), 0, 200)]);
     http_response_code(500);
     echo "Le message n'a pas pu être envoyé. Merci de réessayer ou d'écrire directement à contact@theo-birost.fr.";
 }
