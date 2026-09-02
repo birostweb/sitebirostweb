@@ -778,6 +778,8 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
         </div>
         <div class="field"><label for="cn">Nom</label><input id="cn" name="name" type="text" autocomplete="name" required maxlength="100"></div>
         <div class="field"><label for="ce">Email</label><input id="ce" name="email" type="email" autocomplete="email" required maxlength="254"></div>
+        <!-- Champs remplis automatiquement par le configurateur (onglets Offres). Masqués pour garder le formulaire court. -->
+        <div id="form-details" hidden>
         <div class="field"><label for="coffer">Offre qui vous intéresse</label>
           <select id="coffer" name="offre">
             <option value="">— Je ne sais pas encore —</option>
@@ -815,6 +817,7 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
             <option value="Pro · VPS-2 (69 €/mois)">Pro · VPS-2 — 69 €/mois (tout compris)</option>
           </select>
         </div>
+        </div><!-- /form-details -->
         <div class="field"><label for="cm">Votre projet</label><textarea id="cm" name="message" required minlength="10" maxlength="5000"></textarea></div>
         <input type="hidden" name="ts" value="<?= htmlspecialchars((string) $contactFormTs, ENT_QUOTES) ?>">
         <input type="hidden" name="token" value="<?= htmlspecialchars($contactFormToken, ENT_QUOTES) ?>">
