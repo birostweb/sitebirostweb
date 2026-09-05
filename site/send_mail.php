@@ -303,6 +303,43 @@ function contact_altcha_check(string $payload, string $secret): bool
     return true;
 }
 
+/**
+ * Profils SMTP disponibles, dans l'ordre de priorité.
+ * Primaire = SMTP_* ; secours = SMTP2_*. On garde ceux qui sont complets.
+ * @return array<int,array{host:string,user:string,pass:string,secure:string,port:int}>
+ */
+function contact_smtp_profiles(): array
+{
+    $profiles = [];
+    foreach (['', '2'] as $suffix) {
+        $host = contact_env("SMTP{$suffix}_HOST");
+        $user = contact_env("SMTP{$suffix}_USERNAME");
+        $pass = contact_env("SMTP{$suffix}_PASSWORD");
+        if ($host !== null && $user !== null && $pass !== null) {
+            $profiles[] = [
+                'host'   => $host,
+                'user'   => $user,
+                'pass'   => $pass,
+                'secure' => contact_env("SMTP{$suffix}_SECURE") ?? 'tls',
+                'port'   => (int) (contact_env("SMTP{$suffix}_PORT") ?? '587'),
+            ];
+        }
+    }
+    return $profiles;
+}
+
+/** Applique un profil SMTP à une instance PHPMailer. */
+function contact_apply_smtp(PHPMailer $m, array $p): void
+{
+    $m->isSMTP();
+    $m->Host       = $p['host'];
+    $m->SMTPAuth   = true;
+    $m->Username   = $p['user'];
+    $m->Password   = $p['pass'];
+    $m->SMTPSecure = $p['secure'];
+    $m->Port       = $p['port'];
+}
+
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(403);
     echo "Un problème est survenu, veuillez réessayer.";
@@ -424,66 +461,86 @@ if (contact_global_cap_reached($dailyCap)) {
     exit;
 }
 
-$mail = new PHPMailer(true);
-try {
-    $mail->CharSet = 'UTF-8';
-    $mail->isSMTP();
-    $mail->Host       = contact_env('SMTP_HOST');
-    $mail->SMTPAuth   = true;
-    $mail->Username   = contact_env('SMTP_USERNAME');
-    $mail->Password   = contact_env('SMTP_PASSWORD');
-    $mail->SMTPSecure = contact_env('SMTP_SECURE');
-    $mail->Port       = (int) contact_env('SMTP_PORT');
+$profiles = contact_smtp_profiles();
+if (empty($profiles)) {
+    contact_log('config_error', ['error' => 'aucun profil SMTP configuré']);
+    http_response_code(500);
+    echo "Le message n'a pas pu être envoyé. Merci de réessayer ou d'écrire directement à contact@theo-birost.fr.";
+    exit;
+}
 
-    // OVH exige que le From soit le compte authentifié ; l'adresse du visiteur va en Reply-To.
-    $mail->setFrom(contact_env('SMTP_USERNAME'), 'Formulaire birostweb.fr');
-    $mail->addAddress('contact@theo-birost.fr', 'Théo Birost');
-    $mail->addReplyTo($email, $name);
-    $mail->addCustomHeader('X-Mail-Source', 'birostweb.fr');
+// Destinataire des notifications (par défaut la boîte OVH ; surchargeable via CONTACT_TO).
+$recipient = contact_env('CONTACT_TO') ?? 'contact@theo-birost.fr';
 
-    $subjectOffre = $offre !== '' ? " [$offre]" : '';
-    $mail->isHTML(true);
-    $mail->Subject = "[birostweb.fr] Nouvelle demande de $name$subjectOffre";
+$subjectOffre = $offre !== '' ? " [$offre]" : '';
+$bodyHtml = contact_render_email_html($name, $email, $message, $offre, $maintenance, $hebergement);
+$bodyText = "Nouvelle demande depuis birostweb.fr\n\n"
+    . "Nom : $name\n"
+    . "Email : $email\n"
+    . "Offre : " . ($offre !== '' ? $offre : 'Non précisée') . "\n"
+    . "Maintenance : " . ($maintenance !== '' ? $maintenance : 'Non précisée') . "\n"
+    . "Hébergement : " . ($hebergement !== '' ? $hebergement : 'Non précisé') . "\n\n"
+    . "Message :\n$message";
 
-    // Message jugé douteux : on le marque pour que la boîte le filtre en indésirables.
-    if ($spam['flag']) {
-        $mail->Subject = '[⚠ SPAM?] ' . $mail->Subject;
-        $mail->addCustomHeader('X-Spam-Flag', 'YES');
-        $mail->addCustomHeader('X-Spam-Score', (string) $spam['score']);
-        $mail->addCustomHeader('X-Spam-Reasons', substr(implode('; ', $spam['reasons']), 0, 200));
-        $mail->Priority = 5;
-    }
-
-    $mail->Body    = contact_render_email_html($name, $email, $message, $offre, $maintenance, $hebergement);
-    $mail->AltBody = "Nouvelle demande depuis birostweb.fr\n\n"
-        . "Nom : $name\n"
-        . "Email : $email\n"
-        . "Offre : " . ($offre !== '' ? $offre : 'Non précisée') . "\n"
-        . "Maintenance : " . ($maintenance !== '' ? $maintenance : 'Non précisée') . "\n"
-        . "Hébergement : " . ($hebergement !== '' ? $hebergement : 'Non précisé') . "\n\n"
-        . "Message :\n$message";
-
-    $mail->send();
-    contact_log('sent', ['offre' => $offre, 'maintenance' => $maintenance, 'spam_flag' => $spam['flag']]);
-
-    // --- Accusé de réception automatique au visiteur (best-effort : n'échoue pas la demande) ---
+// On tente chaque profil SMTP dans l'ordre : le 1er qui envoie l'emporte, sinon on bascule sur le suivant.
+$sent = false;
+$usedProfile = null;
+foreach ($profiles as $i => $p) {
     try {
-        $ack = new PHPMailer(true);
-        $ack->CharSet    = 'UTF-8';
-        $ack->isSMTP();
-        $ack->Host       = contact_env('SMTP_HOST');
-        $ack->SMTPAuth   = true;
-        $ack->Username   = contact_env('SMTP_USERNAME');
-        $ack->Password   = contact_env('SMTP_PASSWORD');
-        $ack->SMTPSecure = contact_env('SMTP_SECURE');
-        $ack->Port       = (int) contact_env('SMTP_PORT');
-        $ack->setFrom(contact_env('SMTP_USERNAME'), 'Théo Birost — Birostweb');
-        $ack->addAddress($email, $name);
-        $ack->addReplyTo('contact@theo-birost.fr', 'Théo Birost');
-        $ack->isHTML(true);
-        $ack->Subject = 'Bien reçu — je reviens vers vous sous 48h';
-        $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
-        $ack->Body = <<<HTML
+        $mail = new PHPMailer(true);
+        $mail->CharSet = 'UTF-8';
+        contact_apply_smtp($mail, $p);
+
+        // L'expéditeur DOIT être le compte authentifié (OVH comme Gmail l'exigent) ; le visiteur va en Reply-To.
+        $mail->setFrom($p['user'], 'Formulaire birostweb.fr');
+        $mail->addAddress($recipient, 'Théo Birost');
+        $mail->addReplyTo($email, $name);
+        $mail->addCustomHeader('X-Mail-Source', 'birostweb.fr');
+
+        $mail->isHTML(true);
+        $mail->Subject = "[birostweb.fr] Nouvelle demande de $name$subjectOffre";
+
+        // Message jugé douteux : on le marque pour que la boîte le filtre en indésirables.
+        if ($spam['flag']) {
+            $mail->Subject = '[⚠ SPAM?] ' . $mail->Subject;
+            $mail->addCustomHeader('X-Spam-Flag', 'YES');
+            $mail->addCustomHeader('X-Spam-Score', (string) $spam['score']);
+            $mail->addCustomHeader('X-Spam-Reasons', substr(implode('; ', $spam['reasons']), 0, 200));
+            $mail->Priority = 5;
+        }
+
+        $mail->Body    = $bodyHtml;
+        $mail->AltBody = $bodyText;
+        $mail->send();
+
+        $sent = true;
+        $usedProfile = $p;
+        contact_log('sent', ['profile' => $i, 'host' => $p['host'], 'offre' => $offre, 'maintenance' => $maintenance, 'spam_flag' => $spam['flag']]);
+        break;
+    } catch (Exception $e) {
+        contact_log('send_error', ['profile' => $i, 'host' => $p['host'], 'error' => substr($e->getMessage(), 0, 200)]);
+        // Échec : on tente le profil de secours suivant.
+    }
+}
+
+if (!$sent) {
+    http_response_code(500);
+    echo "Le message n'a pas pu être envoyé. Merci de réessayer ou d'écrire directement à contact@theo-birost.fr.";
+    exit;
+}
+
+// --- Accusé de réception automatique au visiteur (best-effort : n'échoue pas la demande) ---
+try {
+    $ack = new PHPMailer(true);
+    $ack->CharSet = 'UTF-8';
+    contact_apply_smtp($ack, $usedProfile);
+    $ack->setFrom($usedProfile['user'], 'Théo Birost — Birostweb');
+    $ack->addAddress($email, $name);
+    $ack->addReplyTo($recipient, 'Théo Birost');
+    $ack->isHTML(true);
+    $ack->Subject = 'Bien reçu — je reviens vers vous sous 48h';
+    $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+    $ack->Body = <<<HTML
 <!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"></head>
 <body style="margin:0;background-color:#E5E2D6;font-family:'Helvetica Neue',Arial,sans-serif;padding:32px 16px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
@@ -502,16 +559,11 @@ Si vous avez un document ou une précision à ajouter, répondez simplement à c
 </td></tr></table></td></tr></table>
 </body></html>
 HTML;
-        $ack->AltBody = "Bonjour $name,\n\nMerci pour votre message, je l'ai bien reçu. Je reviens vers vous sous 48h (jours ouvrés).\n\nÀ très vite,\nThéo Birost — birostweb.fr";
-        $ack->send();
-    } catch (Exception $e) {
-        // Ignoré : la notification principale, elle, est bien partie.
-    }
-
-    http_response_code(200);
-    echo "Merci ! Votre demande a bien été envoyée. Je vous réponds sous 48h.";
+    $ack->AltBody = "Bonjour $name,\n\nMerci pour votre message, je l'ai bien reçu. Je reviens vers vous sous 48h (jours ouvrés).\n\nÀ très vite,\nThéo Birost — birostweb.fr";
+    $ack->send();
 } catch (Exception $e) {
-    contact_log('send_error', ['error' => substr($e->getMessage(), 0, 200)]);
-    http_response_code(500);
-    echo "Le message n'a pas pu être envoyé. Merci de réessayer ou d'écrire directement à contact@theo-birost.fr.";
+    // Ignoré : la notification principale, elle, est bien partie.
 }
+
+http_response_code(200);
+echo "Merci ! Votre demande a bien été envoyée. Je vous réponds sous 48h.";
