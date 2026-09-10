@@ -508,10 +508,10 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
       </article>
       <article class="mini">
         <span class="mini__k">Projet perso · Solo</span>
-        <h3>Lanceur de dés</h3>
-        <p>Un simulateur de lancer de dés animé, pour m'entraîner sur la génération aléatoire, la manipulation du DOM et les animations CSS.</p>
-        <div class="tags"><span class="tag">HTML</span><span class="tag">Tailwind</span><span class="tag">JavaScript</span><span class="tag">PHP</span></div>
-        <a class="plink" href="https://portfolio.theo-birost.fr/roll-dice/" target="_blank" rel="noopener">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+        <h3>Sidequest</h3>
+        <p>Une collection de mini-jeux à découvrir dans le navigateur : dactylographie, lancer de dés, morpion et Snake.</p>
+        <div class="tags"><span class="tag">Mini-jeux</span><span class="tag">Jeu web</span></div>
+        <a class="plink" href="https://jeu.birostweb.fr/" target="_blank" rel="noopener">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
       </article>
       <article class="mini">
         <span class="mini__k">Projet perso · Solo</span>
@@ -519,6 +519,29 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
         <p>Un template de portfolio en Tailwind et PHP, multilingue FR/EN, pensé pour être facile à reprendre et à adapter.</p>
         <div class="tags"><span class="tag">Tailwind</span><span class="tag">PHP</span><span class="tag">JavaScript</span></div>
         <a class="plink" href="https://portfolio.theo-birost.fr" target="_blank" rel="noopener">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Expériences professionnelles : missions et dates issues des conventions de stage. -->
+<section class="section section--paper" id="parcours">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Parcours</span>
+      <h2 class="h2 reveal">Deux expériences, des besoins concrets.</h2>
+      <p class="lead reveal">Avant Birostweb, deux stages dans le cadre de mon BUT MMI m'ont permis de travailler sur des projets web et de communication.</p>
+    </div>
+    <div class="mini-grid reveal">
+      <article class="mini">
+        <span class="mini__k">22 juin – 15 août 2026 · 8 semaines</span>
+        <h3>SCI BIROST</h3>
+        <p>Stage en développement web et communication digitale. Mission : création d'un site de réservation pour deux logements touristiques, gestion de leur communication digitale et participation à leur promotion publicitaire.</p>
+      </article>
+      <article class="mini">
+        <span class="mini__k">20 avril – 19 juin 2026 · 9 semaines</span>
+        <h3>AER BFC</h3>
+        <p>Stage à l'Agence économique régionale de Bourgogne-Franche-Comté, à Dijon. Mission : contribuer à la refonte d'un site internet, avec un travail sur le Forum Hydrogen Business for Climate présenté dans mes réalisations.</p>
       </article>
     </div>
   </div>
