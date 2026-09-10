@@ -363,6 +363,7 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
 .estimate__total{margin-top:10px;padding-top:10px;border-top:1px solid var(--d-line);font-family:var(--fd);font-weight:700;font-size:18px;color:var(--d-text)}
 .estimate__note{font-family:var(--fm);font-size:11px;color:var(--d-dim);margin-top:8px;line-height:1.5}
 </style>
+<link rel="stylesheet" href="/css/studio.css">
 </head>
 <body>
 
