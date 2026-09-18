@@ -513,11 +513,11 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
     <div class="subhead reveal">Autres projets — perso</div>
     <div class="mini-grid reveal">
       <article class="mini">
-        <span class="mini__k">Application web · Full-stack</span>
-        <h3>Budget</h3>
-        <p>Gestion de budget et de dettes : solde, stratégies de remboursement (avalanche / snowball), cartes et objectifs. Connexion sans mot de passe (code email).</p>
-        <div class="tags"><span class="tag">Vue 3</span><span class="tag">Tailwind</span><span class="tag">PHP</span><span class="tag">Docker</span></div>
-        <a class="plink" href="https://budget.theo-birost.fr" target="_blank" rel="noopener">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+        <span class="mini__k">Défi perso · Intégration</span>
+        <h3>One Page Challenge</h3>
+        <p>Un défi que je me lance : concevoir et coder une landing page complète en une heure, from scratch. Cinq pages à ce jour — cinéma, e-commerce, voyage, tech et SaaS.</p>
+        <div class="tags"><span class="tag">Vue 3</span><span class="tag">Vite</span><span class="tag">Tailwind</span><span class="tag">HTML</span></div>
+        <a class="plink" href="https://github.com/birostweb/onepage" target="_blank" rel="noopener">Voir le code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
       </article>
       <article class="mini">
         <span class="mini__k">Jeu web · Solo</span>
