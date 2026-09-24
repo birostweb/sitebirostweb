@@ -515,7 +515,7 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
       <article class="mini">
         <span class="mini__k">Défi perso · Intégration</span>
         <h3>One Page Challenge</h3>
-        <p>Un défi que je me lance : concevoir et coder une landing page complète en une heure, from scratch. Cinq pages à ce jour — cinéma, e-commerce, voyage, tech et SaaS.</p>
+        <p>Un défi que je me lance : concevoir et coder une landing page complète en une heure, from scratch. Quatre pages à ce jour — e-commerce, voyage, tech et SaaS.</p>
         <div class="tags"><span class="tag">Vue 3</span><span class="tag">Vite</span><span class="tag">Tailwind</span><span class="tag">HTML</span></div>
         <a class="plink" href="https://onepage.birostweb.fr" target="_blank" rel="noopener">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
       </article>
