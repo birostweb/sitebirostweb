@@ -10,6 +10,14 @@ try {
 $contactFormTs    = time();
 $contactSecret    = $_ENV['CONTACT_FORM_SECRET'] ?? $_SERVER['CONTACT_FORM_SECRET'] ?? getenv('CONTACT_FORM_SECRET') ?: '';
 $contactFormToken = hash_hmac('sha256', (string) $contactFormTs, $contactSecret);
+
+// Cache-busting : ajoute ?v=<empreinte du contenu> aux fichiers statiques.
+// Le .htaccess met ces URL versionnées en cache 1 an : dès qu'un fichier
+// change, son empreinte (donc son URL) change et le navigateur le recharge.
+function asset(string $path): string {
+    $file = __DIR__ . '/' . ltrim($path, '/');
+    return is_file($file) ? $path . '?v=' . substr(md5_file($file), 0, 8) : $path;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -37,14 +45,14 @@ $contactFormToken = hash_hmac('sha256', (string) $contactFormTs, $contactSecret)
 <meta name="twitter:description" content="Des sites web sur-mesure pensés pour vous rapporter des clients. Devis gratuit sous 48h.">
 <meta name="twitter:image" content="https://birostweb.fr/og-image.png">
 <!-- Favicon Birostweb (logo BW) -->
-<link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+<link rel="icon" type="image/png" sizes="512x512" href="<?= asset('/favicon.png') ?>">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <!-- Polices auto-hébergées (RGPD : aucune requête vers Google) -->
 <link rel="preload" href="/fonts/ibmplexsans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/ibmplexsanscondensed-700-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/fonts/fonts.css">
-<link rel="manifest" href="/site.webmanifest">
-<script async type="module" src="/js/altcha.js"></script>
+<link rel="stylesheet" href="<?= asset('/fonts/fonts.css') ?>">
+<link rel="manifest" href="<?= asset('/site.webmanifest') ?>">
+<script async type="module" src="<?= asset('/js/altcha.js') ?>"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Birostweb — Théo Birost","description":"Développeur web full-stack indépendant : sites vitrines, boutiques et applications sur-mesure, du design au déploiement.","url":"https://birostweb.fr","email":"contact@theo-birost.fr","areaServed":"FR","founder":{"@type":"Person","name":"Théo Birost"},"sameAs":["https://github.com/birostweb","https://www.linkedin.com/in/th%C3%A9o-birost-09b286429/","https://www.instagram.com/birost.web"],"priceRange":"€€"}</script>
 <style>
 /* ================= TOKENS ================= */
@@ -363,7 +371,15 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
 .estimate__total{margin-top:10px;padding-top:10px;border-top:1px solid var(--d-line);font-family:var(--fd);font-weight:700;font-size:18px;color:var(--d-text)}
 .estimate__note{font-family:var(--fm);font-size:11px;color:var(--d-dim);margin-top:8px;line-height:1.5}
 </style>
-<link rel="stylesheet" href="/css/studio.css">
+<link rel="stylesheet" href="<?= asset('/css/studio.css') ?>">
+<!-- Animations : GSAP auto-hébergé (CSP 'self'), voir js/motion/ -->
+<link rel="stylesheet" href="<?= asset('/css/motion.css') ?>">
+<script src="<?= asset('/js/motion/init.js') ?>"></script>
+<script defer src="<?= asset('/js/lib/gsap.min.js') ?>"></script>
+<script defer src="<?= asset('/js/lib/ScrollTrigger.min.js') ?>"></script>
+<script defer src="<?= asset('/js/lib/SplitText.min.js') ?>"></script>
+<script defer src="<?= asset('/js/motion/core.js') ?>"></script>
+<script defer src="<?= asset('/js/motion/site.js') ?>"></script>
 </head>
 <body>
 
@@ -435,7 +451,7 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
       <article class="project reveal">
         <div class="shot">
           <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">hydrogenbusinessforclimate.com</span></div>
-          <div class="shot__img"><img src="/img/hydrogen_website.webp" alt="Site du Forum Hydrogen Business for Climate" width="1400" height="804" loading="lazy" decoding="async"></div>
+          <div class="shot__img"><img src="<?= asset('/img/hydrogen_website.webp') ?>" alt="Site du Forum Hydrogen Business for Climate" width="1400" height="804" loading="lazy" decoding="async"></div>
         </div>
         <div>
           <span class="project__k">Projet client · Stage</span>
@@ -454,7 +470,7 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
       <article class="project reveal">
         <div class="shot">
           <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">generique.theo-birost.fr</span></div>
-          <div class="shot__img"><img src="/img/generique.webp" alt="Générique — index de cinéma" width="1400" height="875" loading="lazy" decoding="async"></div>
+          <div class="shot__img"><img src="<?= asset('/img/generique.webp') ?>" alt="Générique — index de cinéma" width="1400" height="875" loading="lazy" decoding="async"></div>
         </div>
         <div>
           <span class="project__k">Application web · Full-stack</span>
@@ -473,7 +489,7 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
       <article class="project reveal">
         <div class="shot">
           <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">clicker — jeu</span></div>
-          <div class="shot__img"><img src="/img/clicker_img.webp" alt="Jeu du clicker" width="1400" height="741" loading="lazy" decoding="async"></div>
+          <div class="shot__img"><img src="<?= asset('/img/clicker_img.webp') ?>" alt="Jeu du clicker" width="1400" height="741" loading="lazy" decoding="async"></div>
         </div>
         <div>
           <span class="project__k">Projet perso · Solo</span>
@@ -492,7 +508,7 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
       <article class="project reveal">
         <div class="shot">
           <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">maisondubonheurstesavine.fr</span></div>
-          <div class="shot__img"><img src="/img/maisondubonheur.webp" alt="Maison du Bonheur — site de réservation" width="1400" height="875" loading="lazy" decoding="async"></div>
+          <div class="shot__img"><img src="<?= asset('/img/maisondubonheur.webp') ?>" alt="Maison du Bonheur — site de réservation" width="1400" height="875" loading="lazy" decoding="async"></div>
         </div>
         <div>
           <span class="project__k">Projet client · Stage</span>
