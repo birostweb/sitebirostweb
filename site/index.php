@@ -450,6 +450,25 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
 
       <article class="project reveal">
         <div class="shot">
+          <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">maisondubonheurstesavine.fr</span></div>
+          <div class="shot__img"><img src="<?= asset('/img/maisondubonheur.webp') ?>" alt="Maison du Bonheur — site de réservation" width="1400" height="875" loading="lazy" decoding="async"></div>
+        </div>
+        <div>
+          <span class="project__k">Projet client · Stage</span>
+          <h3>Maison du Bonheur</h3>
+          <span class="project__ctx">Site de réservation · Deux logements touristiques</span>
+          <p>Le site vitrine de deux appartements meublés à Troyes et Sainte-Savine. J'ai mis en avant les logements, les avis des voyageurs et l'accueil de l'hôtesse, avec un parcours clair qui mène jusqu'à la réservation. Un site rapide et soigné, pensé pour donner envie de poser ses valises.</p>
+          <p class="project__role"><b>Mon rôle</b>Seul développeur, de la conception à la mise en ligne, pendant mon stage à la SCI Birost.</p>
+          <div class="tags"><span class="tag">Vue 3</span><span class="tag">Vite</span><span class="tag">JavaScript</span><span class="tag">SEO</span></div>
+          <div class="project__links">
+            <a class="plink" href="https://maisondubonheurstesavine.fr/" target="_blank" rel="noopener">Voir le site
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="project reveal">
+        <div class="shot">
           <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">hydrogenbusinessforclimate.com</span></div>
           <div class="shot__img"><img src="<?= asset('/img/hydrogen_website.webp') ?>" alt="Site du Forum Hydrogen Business for Climate" width="1400" height="804" loading="lazy" decoding="async"></div>
         </div>
@@ -500,25 +519,6 @@ altcha-widget{display:block;margin:2px 0;--altcha-max-width:100%;--altcha-border
           <div class="tags"><span class="tag">HTML</span><span class="tag">Tailwind</span><span class="tag">PHP</span><span class="tag">Docker</span></div>
           <div class="project__links">
             <a class="plink" href="https://portfolio.theo-birost.fr/clicker/" target="_blank" rel="noopener">Voir le projet
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
-          </div>
-        </div>
-      </article>
-
-      <article class="project reveal">
-        <div class="shot">
-          <div class="shot__bar"><i></i><i></i><i></i><span class="shot__url">maisondubonheurstesavine.fr</span></div>
-          <div class="shot__img"><img src="<?= asset('/img/maisondubonheur.webp') ?>" alt="Maison du Bonheur — site de réservation" width="1400" height="875" loading="lazy" decoding="async"></div>
-        </div>
-        <div>
-          <span class="project__k">Projet client · Stage</span>
-          <h3>Maison du Bonheur</h3>
-          <span class="project__ctx">Site de réservation · Deux logements touristiques</span>
-          <p>Le site vitrine de deux appartements meublés à Troyes et Sainte-Savine. J'ai mis en avant les logements, les avis des voyageurs et l'accueil de l'hôtesse, avec un parcours clair qui mène jusqu'à la réservation. Un site rapide et soigné, pensé pour donner envie de poser ses valises.</p>
-          <p class="project__role"><b>Mon rôle</b>Seul développeur, de la conception à la mise en ligne, pendant mon stage à la SCI Birost.</p>
-          <div class="tags"><span class="tag">Vue 3</span><span class="tag">Vite</span><span class="tag">JavaScript</span><span class="tag">SEO</span></div>
-          <div class="project__links">
-            <a class="plink" href="https://maisondubonheurstesavine.fr/" target="_blank" rel="noopener">Voir le site
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
           </div>
         </div>

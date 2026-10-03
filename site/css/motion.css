@@ -9,6 +9,10 @@
 .m-pending .hero__card,
 .m-pending .bcell{opacity:0}
 
+/* Captures de projets : l'image zoomée (survol, parallaxe) reste dans son cadre,
+   sans passer par-dessus la barre du navigateur. */
+.shot__img{overflow:hidden}
+
 /* Masques SplitText : un peu d'air pour ne pas couper jambages et approches. */
 .mw-mask,.mc-mask{padding:0 .06em .14em;margin:0 -.06em -.14em}
 
